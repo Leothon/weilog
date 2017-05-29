@@ -1,0 +1,48 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.a10483.weilog.fragment.allpage">
+
+   <!-- <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/allpage_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+            <ImageView
+                android:id="@+id/open_nav1"
+                android:src="@drawable/cehua"
+                android:layout_width="70dp"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="240dp"
+                android:layout_height="match_parent">
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:entries="@array/spingarr" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search" />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>-->
+
+    <ListView
+        android:id="@+id/allpage_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+
+</android.support.design.widget.CoordinatorLayout>
