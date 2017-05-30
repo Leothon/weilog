@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <VideoView
+        android:id="@+id/video_in_videopage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+    <TextView
+        android:id="@+id/context_in_videopage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="沃尔沃自动刹车，隔着屏幕都能感觉到尴尬,这简直就是"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:lines="1"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <ImageView
+            android:id="@+id/user_icon_in_videopage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/usericon"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/user_name_in_videopage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Leothon"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/likeother"
+            android:layout_marginLeft="190dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="1983"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:drawableLeft="@color/orange"/>
+        <TextView
+            android:id="@+id/talkother"
+            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="1654"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:drawableLeft="@color/orange"/>
+    </LinearLayout>
+</LinearLayout>

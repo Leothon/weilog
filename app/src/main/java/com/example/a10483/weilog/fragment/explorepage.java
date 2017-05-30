@@ -49,12 +49,13 @@ public class explorepage extends Fragment {
         hotpot=(TextView)view.findViewById(R.id.hotpot_pager);
         video=(TextView)view.findViewById(R.id.video_pager);
         viewPager=(ViewPager)view.findViewById(R.id.explore_viewpager);
+        trend.setTextColor(getResources().getColor(R.color.red));
         hotpotpage hotpot_page=new hotpotpage();
         trendpage trend_page=new trendpage();
-        final videopage video_page=new videopage();
+        videopage video_page=new videopage();
         list=new ArrayList<>();
-        list.add(hotpot_page);
         list.add(trend_page);
+        list.add(hotpot_page);
         list.add(video_page);
         WeilogFragmentPagerAdapter adapter=new WeilogFragmentPagerAdapter(getChildFragmentManager(),list);
         viewPager.setAdapter(adapter);
@@ -79,6 +80,35 @@ public class explorepage extends Fragment {
             }
         });
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        trend.setTextColor(getResources().getColor(R.color.red));
+                        hotpot.setTextColor(getResources().getColor(R.color.gray));
+                        video.setTextColor(getResources().getColor(R.color.gray));
+                        break;
+                    case 1:
+                        trend.setTextColor(getResources().getColor(R.color.gray));
+                        hotpot.setTextColor(getResources().getColor(R.color.red));
+                        video.setTextColor(getResources().getColor(R.color.gray));
+                        break;
+                    case 2:
+                        trend.setTextColor(getResources().getColor(R.color.gray));
+                        hotpot.setTextColor(getResources().getColor(R.color.gray));
+                        video.setTextColor(getResources().getColor(R.color.red));
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         return view;
     }

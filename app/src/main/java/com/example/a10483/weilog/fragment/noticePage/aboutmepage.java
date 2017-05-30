@@ -1,4 +1,4 @@
-package com.example.a10483.weilog.fragment.explorePage;
+package com.example.a10483.weilog.fragment.noticePage;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,24 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
-import com.example.a10483.weilog.Adapter.WeilogFragmentPagerAdapter;
 import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
 
 import java.util.List;
 
-public class hotpotpage extends Fragment {
+public class aboutmepage extends Fragment {
 
-    private ListView hotpot_listview;
-    private List<Weilog> hotpotdata;
+    private ListView aboutme_listview;
+    private List<Weilog> aboutmedata;
 
-    public hotpotpage() {
+    public aboutmepage() {
 
     }
-
 
 
     @Override
@@ -37,11 +34,11 @@ public class hotpotpage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.hotpotpager,container,false);
-        hotpot_listview=(ListView)view.findViewById(R.id.hotpot_listview);
-        WeilogAdapter adapter=new WeilogAdapter(getActivity(),hotpotdata);
-        hotpot_listview.setAdapter(adapter);
-        hotpot_listview.setDividerHeight(0);
+
+        View view=inflater.inflate(R.layout.fragment_aboutmepage, container, false);
+        aboutme_listview=(ListView)view.findViewById(R.id.aboutme_listview);
+        WeilogAdapter adapter=new WeilogAdapter(getActivity(),aboutmedata);
+        aboutme_listview.setAdapter(adapter);
         return view;
     }
 

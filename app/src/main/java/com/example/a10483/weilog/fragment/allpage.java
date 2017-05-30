@@ -23,6 +23,8 @@ import com.example.a10483.weilog.R;
 import java.util.List;
 
 import static com.example.a10483.weilog.R.id.nav_view;
+import static com.example.a10483.weilog.R.id.user_head;
+import static com.example.a10483.weilog.R.id.user_name;
 
 public class allpage extends Fragment{
 
@@ -31,7 +33,7 @@ public class allpage extends Fragment{
     private ImageView open_nav1;
     private ImageView search;
     private ListView allpage_listview;
-    private FloatingActionButton floatingButton;
+    private FloatingActionButton cameraButton;
     private List<Weilog> weilogdata;
     public allpage() {
 
@@ -49,7 +51,7 @@ public class allpage extends Fragment{
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_allpage,container,false);
         allpage_listview=(ListView)view.findViewById(R.id.allpage_listview);
-        floatingButton=(FloatingActionButton)view.findViewById(R.id.floatbutton);
+        //cameraButton=(FloatingActionButton)view.findViewById(R.id.camera_button);
         WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         allpage_listview.setAdapter(adapter);
         allpage_listview.setDividerHeight(0);

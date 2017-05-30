@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.a10483.weilog.fragment.allpage">
+
 
 
     <ListView
@@ -14,14 +16,36 @@
 
     </ListView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatbutton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/floatmenu"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="30dp"
-    />
+        fab:fab_addButtonColorNormal="@color/red"
+        android:layout_marginRight="15dp">
+
+        <!--<com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/camera_button"
+            android:background="@drawable/camera"
+            fab:fabSize="mini"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/media_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/media"
+            fab:fabSize="mini"
+            fab:layout_anchor="@+id/allpage_listview"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/write_button"
+            android:background="@drawable/write"
+            fab:fabSize="mini"/>-->
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>
