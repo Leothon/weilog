@@ -86,16 +86,8 @@ public class MainActivity extends AppCompatActivity
 
         setTabListener();
 
-        switch (pagenow){
-            case 0:
-                titlename.setText("all");
-                break;
-            case 1:
-                titlename.setText("da");
-                break;
-            case 2:
-                titlename.setText("ca");
-        }
+
+
     }
 
 
@@ -106,31 +98,35 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 switchFragment(ALLPAGE);
+                titlename.setText("全部");
+                search.setImageResource(R.drawable.ic_search);
             }
         });
         explorePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switchFragment(EXPLOREPAGE);
+                titlename.setText("探索");
+                search.setImageResource(R.drawable.ic_search);
             }
         });
         noticePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switchFragment(NOTICEPAGE);
+                titlename.setText("消息提醒");
+                search.setImageResource(R.drawable.message);
             }
         });
     }
 
     public void switchFragment(String pagename){
-        int pagenow=0;
         FragmentManager manager=getSupportFragmentManager();
         transaction=manager.beginTransaction();
         ClearAllFragment(transaction);
         switch (pagename){
             case ALLPAGE:
                 allPage.setImageResource(R.drawable.allpagedark);
-                pagenow=0;
                 if (allPagefragment==null){
                     allPagefragment=new allpage();
                     transaction.add(R.id.contentlayout,allPagefragment,ALLPAGE);
@@ -140,7 +136,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case EXPLOREPAGE:
                 explorePage.setImageResource(R.drawable.explorepagedark);
-                pagenow=1;
                 if (explorePagefragment==null){
                     explorePagefragment=new explorepage();
                     transaction.add(R.id.contentlayout,explorePagefragment,EXPLOREPAGE);
@@ -150,7 +145,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case NOTICEPAGE:
                 noticePage.setImageResource(R.drawable.noyicepagedark);
-                pagenow=2;
                 if (noticePagefragment==null){
                     noticePagefragment=new noticepage();
                     transaction.add(R.id.contentlayout,noticePagefragment,NOTICEPAGE);

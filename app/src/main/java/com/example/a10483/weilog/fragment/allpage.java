@@ -3,6 +3,7 @@ package com.example.a10483.weilog.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,7 +16,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.example.a10483.weilog.Adapter.WeilogAdapter;
+import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
+
+import java.util.List;
 
 import static com.example.a10483.weilog.R.id.nav_view;
 
@@ -26,6 +31,8 @@ public class allpage extends Fragment{
     private ImageView open_nav1;
     private ImageView search;
     private ListView allpage_listview;
+    private FloatingActionButton floatingButton;
+    private List<Weilog> weilogdata;
     public allpage() {
 
     }
@@ -41,23 +48,18 @@ public class allpage extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_allpage,container,false);
-        //allpage_toolbar=(Toolbar)view.findViewById(R.id.allpage_toolbar);
-        //((AppCompatActivity)getActivity()).setSupportActionBar(allpage_toolbar);
-        //open_nav1=(ImageView)view.findViewById(R.id.open_nav1);
-        //search=(ImageView)view.findViewById(R.id.search);
         allpage_listview=(ListView)view.findViewById(R.id.allpage_listview);
-
-        //open_nav1.setOnClickListener(this);
+        floatingButton=(FloatingActionButton)view.findViewById(R.id.floatbutton);
+        WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
+        allpage_listview.setAdapter(adapter);
+        allpage_listview.setDividerHeight(0);
         setListener();
         return view;
     }
     public void setListener(){
 
+
     }
-    //public void onClick(View view){
-        //DrawerLayout drawer = (DrawerLayout)view.findViewById(R.id.drawer_layout);
-        //drawer.openDrawer(nav_view);
-    //}
 }
 
 

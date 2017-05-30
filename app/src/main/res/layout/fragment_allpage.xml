@@ -4,45 +4,24 @@
     android:layout_height="match_parent"
     tools:context="com.example.a10483.weilog.fragment.allpage">
 
-   <!-- <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/allpage_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
-            <ImageView
-                android:id="@+id/open_nav1"
-                android:src="@drawable/cehua"
-                android:layout_width="70dp"
-                android:layout_height="match_parent" />
-            <LinearLayout
-                android:layout_width="240dp"
-                android:layout_height="match_parent">
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:entries="@array/spingarr" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/search"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_search" />
-
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>-->
 
     <ListView
         android:id="@+id/allpage_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
     </ListView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatbutton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+    />
 
 
 </android.support.design.widget.CoordinatorLayout>

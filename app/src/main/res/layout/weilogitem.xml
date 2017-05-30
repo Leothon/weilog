@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/user_head"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/usericon"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="杜蕾斯" />
+            <ImageView android:id="@+id/user_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/institution_v"/>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/weilog_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1小时前"
+                    android:textColor="@color/gray"
+                    android:textSize="12dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/weilog_context"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+            <ImageView
+                android:id="@+id/image_in_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/usericon"
+                android:layout_marginTop="3dp"
+                android:visibility="gone" />
+            <VideoView
+                android:id="@+id/video_in_context"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/share_layout"
+            android:orientation="vertical"
+            android:layout_marginTop="3dp"
+            android:visibility="gone"
+            android:background="@color/backgrey">
+
+            <TextView
+                android:id="@+id/share_context"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                />
+            <ImageView
+                android:id="@+id/image_in_sharecontext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/usericon"
+                android:layout_marginTop="3dp"
+                android:visibility="gone" />
+            <VideoView
+                android:id="@+id/video_in_sharecontext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp" >
+            <TextView
+                android:id="@+id/from_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="来自:努比亚Z11miniS"
+                android:textColor="@color/gray"
+                android:textSize="12dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/share_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    android:textColor="@color/gray"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:id="@+id/talk_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="100"
+                    android:textColor="@color/gray"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:id="@+id/like_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="1000"
+                    android:textColor="@color/gray"
+                    android:textSize="13dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

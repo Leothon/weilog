@@ -14,7 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.a10483.weilog.Adapter.WeilogFragmentPagerAdapter;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.fragment.explorePage.hotpotpage;
+import com.example.a10483.weilog.fragment.explorePage.trendpage;
+import com.example.a10483.weilog.fragment.explorePage.videopage;
+
+import java.util.ArrayList;
 
 public class explorepage extends Fragment {
 
@@ -26,6 +32,7 @@ public class explorepage extends Fragment {
     private TextView hotpot;
     private TextView video;
     private ViewPager viewPager;
+    private ArrayList<Fragment> list;
     public explorepage() {
 
     }
@@ -38,15 +45,45 @@ public class explorepage extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_explorepage, container, false);
 
-        //explore_toolbar=(Toolbar)view.findViewById(R.id.explore_toolbar);
-        //((AppCompatActivity)getActivity()).setSupportActionBar(explore_toolbar);
-        //open_nav2=(ImageView)view.findViewById(R.id.open_nav2);
-        //search1=(ImageView)view.findViewById(R.id.search1);
         trend=(TextView)view.findViewById(R.id.trend_pager);
         hotpot=(TextView)view.findViewById(R.id.hotpot_pager);
         video=(TextView)view.findViewById(R.id.video_pager);
         viewPager=(ViewPager)view.findViewById(R.id.explore_viewpager);
+        hotpotpage hotpot_page=new hotpotpage();
+        trendpage trend_page=new trendpage();
+        final videopage video_page=new videopage();
+        list=new ArrayList<>();
+        list.add(hotpot_page);
+        list.add(trend_page);
+        list.add(video_page);
+        WeilogFragmentPagerAdapter adapter=new WeilogFragmentPagerAdapter(getChildFragmentManager(),list);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+
+        trend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(0);
+            }
+        });
+        hotpot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(1);
+            }
+        });
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewPager.setCurrentItem(2);
+            }
+        });
+
+
         return view;
     }
+
+
+
 
 }
