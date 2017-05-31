@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.a10483.weilog.Activityaboutme">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_inme"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/backgrey">
+
+            <ImageView
+                android:id="@+id/back_in_me"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_back"
+                android:tint="@color/white"/>
+            <TextView
+                android:id="@+id/infoaboutme"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Leothon&#8201;535条微博"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:layout_marginLeft="35dp"
+                android:visibility="gone"/>
+            <ImageView
+                android:id="@+id/searchmylog"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="280dp"
+                android:src="@drawable/ic_search"
+                android:tint="@color/white"/>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ListView
+        android:id="@+id/aboutme_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>

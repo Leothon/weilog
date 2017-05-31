@@ -1,5 +1,6 @@
 package com.example.a10483.weilog;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     private ImageView open_nav;
     private TextView titlename;
     private ImageView search;
+    private ImageView nav_usericon;
+    private TextView nav_username;
 
     @Override
     public boolean releaseInstance() {
@@ -54,19 +57,14 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
         noticePage=(ImageView)findViewById(R.id.noticePage);
+        nav_usericon=(ImageView)findViewById(R.id.nav_usericon);
+        nav_username=(TextView)findViewById(R.id.nav_username);
         switchFragment(ALLPAGE);
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -81,6 +79,14 @@ public class MainActivity extends AppCompatActivity
                 drawer.openDrawer(GravityCompat.START);
             }
         });
+        /*nav_usericon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转到我的页面
+                Intent intent=new Intent(MainActivity.this,Activityaboutme.class);
+                startActivity(intent);
+            }
+        });*/
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -184,7 +190,7 @@ public class MainActivity extends AppCompatActivity
 
 
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         switch (id){
@@ -218,7 +224,11 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    protected void Listenuser(){}
+    protected void Listenuser(){
+        //跳转到我的页面
+        Intent intent=new Intent(MainActivity.this,Activityaboutme.class);
+        startActivity(intent);
+    }
     protected void Listenedit(){}
     protected void Listenscan(){}
     protected void Listenhisview(){}
