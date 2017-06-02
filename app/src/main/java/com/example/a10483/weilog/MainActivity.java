@@ -229,8 +229,13 @@ public class MainActivity extends AppCompatActivity
         Intent intent=new Intent(MainActivity.this,Activityaboutme.class);
         startActivity(intent);
     }
-    protected void Listenedit(){}
-    protected void Listenscan(){}
+    protected void Listenedit(){
+        Intent intent=new Intent(MainActivity.this,editactivity.class);
+        startActivity(intent);
+    }
+    protected void Listenscan(){
+        startActivity(new Intent(MainActivity.this,CaptureActivity.class));
+    }
     protected void Listenhisview(){}
     protected void Listensettings(){}
     protected void Listennightmode(){}
