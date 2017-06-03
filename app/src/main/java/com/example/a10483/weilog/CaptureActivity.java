@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -46,15 +45,6 @@ import com.example.a10483.weilog.utils.CaptureActivityHandler;
 import com.example.a10483.weilog.utils.InactivityTimer;
 import com.google.zxing.Result;
 
-/**
- * This activity opens the camera and does the actual scanning on a background
- * thread. It draws a viewfinder to help the user place the barcode correctly,
- * shows feedback as the image processing is happening, and then overlays the
- * results when a scan is successful.
- * 
- * @author dswitkin@google.com (Daniel Switkin)
- * @author Sean Owen
- */
 public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
 	private static final String TAG = CaptureActivity.class.getSimpleName();

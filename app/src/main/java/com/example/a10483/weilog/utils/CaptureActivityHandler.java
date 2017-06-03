@@ -67,12 +67,9 @@ public class CaptureActivityHandler extends Handler {
 		case R.id.decode_succeeded:
 			state = State.SUCCESS;
 			Bundle bundle = message.getData();
-
 			activity.handleDecode((Result) message.obj, bundle);
 			break;
 		case R.id.decode_failed:
-			// We're decoding as fast as possible, so when one decode fails,
-			// start another.
 			state = State.PREVIEW;
 			cameraManager.requestPreviewFrame(decodeThread.getHandler(), R.id.decode);
 			break;

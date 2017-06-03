@@ -1,21 +1,15 @@
 package com.example.a10483.weilog;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 
-import com.example.a10483.weilog.decode.DecodeThread;
 
 public class ResultActivity extends Activity {
 
@@ -34,12 +28,6 @@ public class ResultActivity extends Activity {
 		back_from_web=(ImageView)findViewById(R.id.back_from_web);
 		item=(TextView)findViewById(R.id.item);
 		if (null != extras) {
-			//int width = extras.getInt("width");
-			//int height = extras.getInt("height");
-			//LayoutParams lps = new LayoutParams(width, height);
-			//lps.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
-			//lps.leftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-			//lps.rightMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 			String result = extras.getString("result");
 			mResultText.setText(result);
 		}

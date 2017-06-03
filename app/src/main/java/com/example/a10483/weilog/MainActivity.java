@@ -215,6 +215,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_clearcache:
                 Listenclearcache();
                 break;
+
+            default:
+                break;
         }
 
 
@@ -236,8 +239,12 @@ public class MainActivity extends AppCompatActivity
     protected void Listenscan(){
         startActivity(new Intent(MainActivity.this,CaptureActivity.class));
     }
-    protected void Listenhisview(){}
-    protected void Listensettings(){}
+    protected void Listenhisview(){
+        startActivity(new Intent(MainActivity.this,hisScan.class));
+    }
+    protected void Listensettings(){
+        startActivity(new Intent(MainActivity.this,setting.class));
+    }
     protected void Listennightmode(){}
     protected void Listenclearcache(){}
 }
