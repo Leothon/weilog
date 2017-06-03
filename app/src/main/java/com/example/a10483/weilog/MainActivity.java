@@ -1,7 +1,9 @@
 package com.example.a10483.weilog;
 
 import android.content.Intent;
+import android.icu.math.BigDecimal;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -21,10 +23,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.a10483.weilog.fragment.allpage;
 import com.example.a10483.weilog.fragment.explorepage;
 import com.example.a10483.weilog.fragment.noticepage;
+import com.example.a10483.weilog.utils.DataCleanManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -246,5 +250,15 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(MainActivity.this,setting.class));
     }
     protected void Listennightmode(){}
-    protected void Listenclearcache(){}
+    protected void Listenclearcache(){
+        //DataCleanManager dataCleanManager=new DataCleanManager();
+        DataCleanManager.cleanInternalCache(this);
+        try{
+            String cachesize=DataCleanManager.getCacheSize(getCacheDir());
+            String mine=new String("清除"+cachesize+"缓存");
+            Toast.makeText(this,mine,Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
