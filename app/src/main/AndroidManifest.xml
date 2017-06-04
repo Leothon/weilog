@@ -56,8 +56,14 @@
         <activity
             android:name=".hisScan"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".setting"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".setting"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".writeWeilog"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
     </application>
 
 </manifest>

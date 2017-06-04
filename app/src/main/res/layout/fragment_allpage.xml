@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.a10483.weilog.fragment.allpage">
 
@@ -16,7 +17,7 @@
 
     </ListView>
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+    <!--<com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/floatmenu"
@@ -43,7 +44,18 @@
             android:id="@+id/write_button"
             android:background="@drawable/write"
             fab:fabSize="mini"/>
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/bt_fab_add"
+        android:layout_gravity="end|bottom"
+        android:id="@+id/write"
+        app:backgroundTint="@color/red"
+        app:rippleColor="@color/orange"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"/>
 
 
 

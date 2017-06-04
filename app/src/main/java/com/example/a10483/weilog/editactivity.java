@@ -1,5 +1,6 @@
 package com.example.a10483.weilog;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -40,7 +41,7 @@ public class editactivity extends AppCompatActivity {
         edit_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //跳转到编辑微博页面
+                startActivity(new Intent(editactivity.this,writeWeilog.class));
             }
         });
         backfromedit.setOnClickListener(new View.OnClickListener() {

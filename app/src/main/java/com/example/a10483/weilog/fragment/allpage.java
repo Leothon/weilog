@@ -1,6 +1,7 @@
 package com.example.a10483.weilog.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.writeWeilog;
 
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class allpage extends Fragment{
     private ImageView search;
     private ListView allpage_listview;
     private FloatingActionButton cameraButton;
+    private FloatingActionButton write_button;
     private List<Weilog> weilogdata;
     public allpage() {
 
@@ -52,6 +55,7 @@ public class allpage extends Fragment{
         View view =inflater.inflate(R.layout.fragment_allpage,container,false);
         allpage_listview=(ListView)view.findViewById(R.id.allpage_listview);
         //cameraButton=(FloatingActionButton)view.findViewById(R.id.camera_button);
+        write_button=(FloatingActionButton)view.findViewById(R.id.write);
         WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         allpage_listview.setAdapter(adapter);
         allpage_listview.setDividerHeight(0);
@@ -59,7 +63,13 @@ public class allpage extends Fragment{
         return view;
     }
     public void setListener(){
-
+        write_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),writeWeilog.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
