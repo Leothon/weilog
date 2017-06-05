@@ -8,7 +8,7 @@ import android.view.Window;
 
 public class splash extends AppCompatActivity {
 
-    private Boolean islogin=true;
+    private Boolean islogin=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
