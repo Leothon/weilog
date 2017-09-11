@@ -182,7 +182,6 @@ public class LoginButton extends Button implements OnClickListener {
 
 		}
 
-		public
 		public void onFailure(WbConnectErrorMessage errorMessage){
 
 		}

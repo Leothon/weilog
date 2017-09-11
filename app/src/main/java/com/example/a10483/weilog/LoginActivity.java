@@ -2,7 +2,7 @@ package com.example.a10483.weilog;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.sina.weibo.sdk.widget.LoginButton;
+
 
 
 public class LoginActivity extends AppCompatActivity {
