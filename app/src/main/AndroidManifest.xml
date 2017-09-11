@@ -37,9 +37,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".Activityaboutme"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -59,11 +56,11 @@
         <activity
             android:name=".setting"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".writeWeilog"
+        <activity
+            android:name=".writeWeilog"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
