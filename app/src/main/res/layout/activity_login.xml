@@ -9,11 +9,23 @@
 
 
 
-    <com.sina.weibo.sdk.widget.LoginButton
-        android:id="@+id/loginbutton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="登录"
-        android:layout_gravity="center"
-        android:background="@android:color/holo_blue_dark"/>
+    <Button
+        android:id="@+id/authbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="授权登录"/>
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登出"/>
+    <Button
+        android:id="@+id/refershtoken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="刷新"/>
+    <TextView
+        android:id="@+id/tokentext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

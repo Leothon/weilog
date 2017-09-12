@@ -1,18 +1,134 @@
 package com.example.a10483.weilog;
 
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ButtonBarLayout;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.sina.weibo.sdk.WbSdk;
+import com.sina.weibo.sdk.auth.AccessTokenKeeper;
+import com.sina.weibo.sdk.auth.AuthInfo;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+import com.sina.weibo.sdk.auth.WbAuthListener;
+import com.sina.weibo.sdk.auth.WbConnectErrorMessage;
+import com.sina.weibo.sdk.auth.sso.SsoHandler;
+import com.sina.weibo.sdk.exception.WeiboException;
+import com.sina.weibo.sdk.net.RequestListener;
+
+import java.text.SimpleDateFormat;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    LoginButton
+
+    private Button Authbutton;
+    private Button logout;
+    private Button refershtoken;
+    private TextView tokentext;
+    //private AuthInfo mAuthInfo;
+    //private static final String TAG = "weibosdk";
+    private Oauth2AccessToken mAccessToken;
+    private SsoHandler mSsoHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //WbSdk.install(LoginActivity.this,mAuthInfo);
 
+        mSsoHandler=new SsoHandler(LoginActivity.this);
+        Authbutton=(Button)findViewById(R.id.authbutton);
+        Authbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSsoHandler.authorize(new SelfWbAuthListener());
+            }
+        });
+        logout=(Button)findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AccessTokenKeeper.clear(getApplicationContext());
+                mAccessToken=new Oauth2AccessToken();
+                updateTokenView(false);
+            }
+        });
+        refershtoken=(Button)findViewById(R.id.refershtoken);
+        tokentext=(TextView)findViewById(R.id.tokentext);
+        refershtoken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!TextUtils.isEmpty(mAccessToken.getRefreshToken())){
+                    AccessTokenKeeper.refreshToken(Constants.APP_KEY, LoginActivity.this, new RequestListener() {
+                        @Override
+                        public void onComplete(String s) {
 
+                        }
+
+                        @Override
+                        public void onWeiboException(WeiboException e) {
+
+                        }
+                    });
+                }
+            }
+        });
+        //从Share Preferences中读取保存好的token信息
+        mAccessToken=AccessTokenKeeper.readAccessToken(this);
+        if (mAccessToken.isSessionValid()){
+            updateTokenView(true);
+        }
+
+    }
+
+    protected void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        //SSO授权回调
+        if(mSsoHandler!=null){
+            mSsoHandler.authorizeCallBack(requestCode,resultCode,data);
+        }
+    }
+    private class SelfWbAuthListener implements WbAuthListener{
+        @Override
+        public void onSuccess(final Oauth2AccessToken token) {
+            LoginActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAccessToken=token;
+                    if (mAccessToken.isSessionValid()){
+                        //保存token到sharePreferences
+                        AccessTokenKeeper.writeAccessToken(LoginActivity.this,mAccessToken);
+                        Toast.makeText(LoginActivity.this,"授权成功"+mAccessToken.getToken(),Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onFailure(WbConnectErrorMessage wbConnectErrorMessage) {
+            Toast.makeText(LoginActivity.this,"授权失败",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void cancel() {
+            Toast.makeText(LoginActivity.this,"取消授权",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateTokenView(boolean hasExisted){
+        String date=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date(mAccessToken.getExpiresTime()));
+        String format=("Token：%1$s \n有效期：%2$s");
+        tokentext.setText(String.format(format,mAccessToken.getToken(),date));
+
+        String message = String.format(format, mAccessToken.getToken(), date);
+        if (hasExisted) {
+            message = ("Token仍在有效期，无需登录") + "\n" + message;
+        }
+        tokentext.setText(message);
     }
 }
