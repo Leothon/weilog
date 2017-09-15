@@ -6,14 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 
-public class splash extends AppCompatActivity {
+import com.sina.weibo.sdk.auth.AccessTokenKeeper;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
+public class splash extends BaseActivity {
+
+    private Oauth2AccessToken token;
     private Boolean islogin=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash);
+        token = AccessTokenKeeper.readAccessToken(this);
+        if (token.isSessionValid()) {
+            islogin=true;
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

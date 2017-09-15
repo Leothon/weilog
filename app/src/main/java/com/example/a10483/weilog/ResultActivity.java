@@ -2,6 +2,7 @@ package com.example.a10483.weilog;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 
 
 
-public class ResultActivity extends Activity {
+public class ResultActivity extends BaseActivity {
 
 	private TextView mResultText;
 	private ImageView back_from_web;

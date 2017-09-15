@@ -16,7 +16,7 @@ import com.example.a10483.weilog.Data.Weilog;
 
 import java.util.List;
 
-public class Activityaboutme extends AppCompatActivity {
+public class Activityaboutme extends BaseActivity {
 
     private Toolbar toolbar_inme;
     private ImageView back_me;

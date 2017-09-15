@@ -15,7 +15,7 @@ import com.example.a10483.weilog.Data.editdata;
 
 import java.util.List;
 
-public class editactivity extends AppCompatActivity {
+public class editactivity extends BaseActivity {
 
     private List<editdata> editdataList;
     private ListView edit_listview;

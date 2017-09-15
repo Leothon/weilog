@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class writeWeilog extends AppCompatActivity implements View.OnClickListener{
+public class writeWeilog extends BaseActivity implements View.OnClickListener{
 
     private ImageView backfromwrite;
     private TextView usernameinwrite;

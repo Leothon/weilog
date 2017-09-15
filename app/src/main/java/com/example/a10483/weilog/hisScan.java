@@ -9,7 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class hisScan extends AppCompatActivity {
+public class hisScan extends BaseActivity {
 
     private Toolbar his_toolbar;
     private ImageView back_from_his;

@@ -1,6 +1,9 @@
 package com.example.a10483.weilog;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,31 +27,37 @@ import com.sina.weibo.sdk.net.RequestListener;
 import java.text.SimpleDateFormat;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
 
+    private Context context;
     private Button Authbutton;
     private Button logout;
     private Button refershtoken;
     private TextView tokentext;
-    //private AuthInfo mAuthInfo;
+    private AuthInfo mAuthInfo;
     //private static final String TAG = "weibosdk";
     private Oauth2AccessToken mAccessToken;
     private SsoHandler mSsoHandler;
+    //private SinaUserInfo mUserInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //WbSdk.install(LoginActivity.this,mAuthInfo);
-
+        context=this;
+        mAuthInfo=new AuthInfo(context,Constants.APP_KEY,Constants.REDIRECT_URL,Constants.SCOPE);
+        WbSdk.install(LoginActivity.this,mAuthInfo);
         mSsoHandler=new SsoHandler(LoginActivity.this);
         Authbutton=(Button)findViewById(R.id.authbutton);
         Authbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mSsoHandler.authorize(new SelfWbAuthListener());
             }
         });
+
+
         logout=(Button)findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +102,16 @@ public class LoginActivity extends AppCompatActivity {
             mSsoHandler.authorizeCallBack(requestCode,resultCode,data);
         }
     }
+    public Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            if (msg.what==1){
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        }
+    };
     private class SelfWbAuthListener implements WbAuthListener{
         @Override
         public void onSuccess(final Oauth2AccessToken token) {
@@ -104,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
                         //保存token到sharePreferences
                         AccessTokenKeeper.writeAccessToken(LoginActivity.this,mAccessToken);
                         Toast.makeText(LoginActivity.this,"授权成功"+mAccessToken.getToken(),Toast.LENGTH_SHORT).show();
+                        Message message=Message.obtain();
+                        message.what=1;
+                        handler.sendMessage(message);
                     }
                 }
             });
@@ -130,5 +152,11 @@ public class LoginActivity extends AppCompatActivity {
             message = ("Token仍在有效期，无需登录") + "\n" + message;
         }
         tokentext.setText(message);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCollector.finishAll();
     }
 }

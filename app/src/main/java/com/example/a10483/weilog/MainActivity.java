@@ -29,8 +29,10 @@ import com.example.a10483.weilog.fragment.allpage;
 import com.example.a10483.weilog.fragment.explorepage;
 import com.example.a10483.weilog.fragment.noticepage;
 import com.example.a10483.weilog.utils.DataCleanManager;
+import com.sina.weibo.sdk.auth.AccessTokenKeeper;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private ImageView allPage;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView nav_usericon;
     private TextView nav_username;
 
+    private Oauth2AccessToken accessToken;
     @Override
     public boolean releaseInstance() {
         return super.releaseInstance();
@@ -249,7 +252,13 @@ public class MainActivity extends AppCompatActivity
     protected void Listensettings(){
         startActivity(new Intent(MainActivity.this,setting.class));
     }
-    protected void Listennightmode(){}
+    protected void Listennightmode(){
+        AccessTokenKeeper.clear(getApplicationContext());
+        accessToken=new Oauth2AccessToken();
+        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
+
+    }
     protected void Listenclearcache(){
         //DataCleanManager dataCleanManager=new DataCleanManager();
         DataCleanManager.cleanInternalCache(this);

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class setting extends AppCompatActivity implements View.OnClickListener{
+public class setting extends BaseActivity implements View.OnClickListener{
 
     private Toolbar setting_toolbar;
     private ImageView back_from_setting;

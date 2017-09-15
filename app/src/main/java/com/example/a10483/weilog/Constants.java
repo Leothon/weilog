@@ -6,6 +6,6 @@ package com.example.a10483.weilog;
 
 public interface Constants {
     public static final String APP_KEY="172318056";//appkey
-    public static final String REDIRECT_URL="http://sina.com";//回调页
+    public static final String REDIRECT_URL="https://api.weibo.com/oauth2/default.html";//回调页
     public static final String SCOPE="all";
 }
