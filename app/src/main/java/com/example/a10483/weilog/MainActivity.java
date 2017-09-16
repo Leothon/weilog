@@ -1,25 +1,17 @@
 package com.example.a10483.weilog;
 
 import android.content.Intent;
-import android.icu.math.BigDecimal;
-import android.net.Uri;
-import android.provider.Settings;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +21,7 @@ import com.example.a10483.weilog.fragment.allpage;
 import com.example.a10483.weilog.fragment.explorepage;
 import com.example.a10483.weilog.fragment.noticepage;
 import com.example.a10483.weilog.utils.DataCleanManager;
+import com.example.a10483.weilog.utils.GetJson;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
@@ -55,6 +48,7 @@ public class MainActivity extends BaseActivity
     private TextView nav_username;
 
     private Oauth2AccessToken accessToken;
+    private final static String get_uid_url="https://api.weibo.com/2/account/get_uid.json";
     @Override
     public boolean releaseInstance() {
         return super.releaseInstance();
@@ -64,6 +58,8 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        accessToken=AccessTokenKeeper.readAccessToken(this);
+        getUID(accessToken);
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
         noticePage=(ImageView)findViewById(R.id.noticePage);
@@ -104,7 +100,23 @@ public class MainActivity extends BaseActivity
     }
 
 
-
+    //用accesstoken获取UID并存入SharePreferences中
+    public  void getUID(final Oauth2AccessToken token){
+        new Thread(){
+            @Override
+            public void run() {
+                try{
+                    String json= GetJson.getjson(get_uid_url+"?access_token="+token);
+                    Log.d("MainActivity",json);
+                    SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
+                    editor.putString("uid",json);
+                    editor.commit();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
 
     public void setTabListener(){
         allPage.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +266,7 @@ public class MainActivity extends BaseActivity
     }
     protected void Listennightmode(){
         AccessTokenKeeper.clear(getApplicationContext());
-        accessToken=new Oauth2AccessToken();
+        //accessToken=new Oauth2AccessToken();
         Intent intent=new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
 

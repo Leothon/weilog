@@ -40,6 +40,7 @@ public class LoginActivity extends BaseActivity {
     private Oauth2AccessToken mAccessToken;
     private SsoHandler mSsoHandler;
     //private SinaUserInfo mUserInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ public class LoginActivity extends BaseActivity {
                 AccessTokenKeeper.clear(getApplicationContext());
                 mAccessToken=new Oauth2AccessToken();
                 updateTokenView(false);
+
             }
         });
         refershtoken=(Button)findViewById(R.id.refershtoken);
