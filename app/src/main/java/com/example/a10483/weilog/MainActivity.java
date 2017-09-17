@@ -2,6 +2,7 @@ package com.example.a10483.weilog;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +25,8 @@ import com.example.a10483.weilog.utils.DataCleanManager;
 import com.example.a10483.weilog.utils.GetJson;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+
+import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -60,6 +63,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         accessToken=AccessTokenKeeper.readAccessToken(this);
         getUID();
+
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
         noticePage=(ImageView)findViewById(R.id.noticePage);
@@ -110,15 +114,18 @@ public class MainActivity extends BaseActivity
                     token=accessToken.getToken().toString();
                     String json= GetJson.getjson(get_uid_url+"?access_token="+token);
                     Log.d("MainActivity",token);
-                    Log.d("MainActivity",json);
+                    JSONObject jsonObject=new JSONObject(json);
+                    String UID=jsonObject.getString("uid");
+                    Log.d("MainActivity",UID);
                     SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
-                    editor.putString("uid",json);
+                    editor.putString("uid",UID);
                     editor.commit();
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         }.start();
+        //JSONObject jsonObject=new JSONObject(json);
     }
 
     public void setTabListener(){
@@ -267,8 +274,12 @@ public class MainActivity extends BaseActivity
     protected void Listensettings(){
         startActivity(new Intent(MainActivity.this,setting.class));
     }
-    protected void Listennightmode(){
+    protected void Listennightmode(){//暂时用作清除掉存放在Share Preferences中的token和UID信息
         AccessTokenKeeper.clear(getApplicationContext());
+        SharedPreferences sp=getSharedPreferences("uid",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        editor.clear();
+        editor.commit();
         //accessToken=new Oauth2AccessToken();
         Intent intent=new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);

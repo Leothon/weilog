@@ -39,6 +39,7 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
     @Override
     public int getCount() {
         return weilogdatas.size();
+
     }
 
     /*@Override

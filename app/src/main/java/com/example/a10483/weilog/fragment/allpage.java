@@ -18,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
+import com.example.a10483.weilog.Data.Logdata;
 import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.ViewHolder;
 import com.example.a10483.weilog.writeWeilog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.a10483.weilog.R.id.nav_view;
@@ -60,6 +62,7 @@ public class allpage extends Fragment{
         write_button=(FloatingActionButton)view.findViewById(R.id.write);
         //WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         //allpage_listview.setAdapter(adapter);
+        initdata();
         allpage_listview.setAdapter(mAdapter=new WeilogAdapter<String>(
                 getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
@@ -73,6 +76,30 @@ public class allpage extends Fragment{
         allpage_listview.setDividerHeight(0);
         setListener();
         return view;
+    }
+    public void initdata(){
+        allpagedata=new ArrayList<String>();
+        String one=new String("Leothon");
+        allpagedata.add(one);
+        String two=new String("Leothon");
+        allpagedata.add(two);
+        String three=new String("Leothon");
+        allpagedata.add(three);
+        String four=new String("Leothon");
+        allpagedata.add(four);
+        String five=new String("Leothon");
+        allpagedata.add(five);
+        String six=new String("Leothon");
+        allpagedata.add(six);
+        String seven=new String("Leothon");
+        allpagedata.add(seven);
+        String eight=new String("Leothon");
+        allpagedata.add(eight);
+        String nine=new String("Leothon");
+        allpagedata.add(nine);
+        String ten=new String("Leothon");
+        allpagedata.add(ten);
+
     }
     public void setListener(){
         write_button.setOnClickListener(new View.OnClickListener() {
