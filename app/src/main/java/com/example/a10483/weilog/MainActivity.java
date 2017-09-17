@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         accessToken=AccessTokenKeeper.readAccessToken(this);
-        getUID(accessToken);
+        getUID();
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
         noticePage=(ImageView)findViewById(R.id.noticePage);
@@ -101,12 +101,15 @@ public class MainActivity extends BaseActivity
 
 
     //用accesstoken获取UID并存入SharePreferences中
-    public  void getUID(final Oauth2AccessToken token){
+    public  void getUID(){
         new Thread(){
             @Override
             public void run() {
                 try{
+                    String token=new String();
+                    token=accessToken.getToken().toString();
                     String json= GetJson.getjson(get_uid_url+"?access_token="+token);
+                    Log.d("MainActivity",token);
                     Log.d("MainActivity",json);
                     SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
                     editor.putString("uid",json);
