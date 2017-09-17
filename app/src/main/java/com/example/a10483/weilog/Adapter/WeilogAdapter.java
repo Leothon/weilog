@@ -16,29 +16,32 @@ import android.widget.VideoView;
 
 import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.utils.ViewHolder;
 
 import java.util.Date;
 import java.util.List;
 import java.util.zip.Inflater;
 
+//通用的Adapter，使用时只需要引用内部类即可调用，参数为上下文，数据List，Item的Id。
+public abstract class WeilogAdapter<T> extends BaseAdapter {
 
-public class WeilogAdapter extends BaseAdapter {
-
-    private LayoutInflater inflater;
-
-    private List<Weilog> weilogdatas;
-    public WeilogAdapter(Context context, List<Weilog> weilogdata ){
+    protected LayoutInflater inflater;
+    protected Context mContext;
+    protected List<T> weilogdatas;
+    protected final int mItemLayoutId;
+    public WeilogAdapter(Context context, List<T> weilogdata ,int ItemLayoutId){
         inflater= LayoutInflater.from(context);
+        this.mContext=context;
         weilogdatas=weilogdata;
+        this.mItemLayoutId=ItemLayoutId;
 
     }
     @Override
     public int getCount() {
-        //return weilogdatas.size();
-        return 10;
+        return weilogdatas.size();
     }
 
-    @Override
+    /*@Override
     public View getView(int position, View contertView, ViewGroup parent) {
 
         ViewHolder holder=null;
@@ -84,7 +87,7 @@ public class WeilogAdapter extends BaseAdapter {
         public TextView share_button;
         public TextView talk_button;
         public TextView like_button;
-    }
+    }*/
 
 
     @Override
@@ -93,12 +96,24 @@ public class WeilogAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public T getItem(int position) {
+        return weilogdatas.get(position);
     }
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int position) {
+        return position;
     }
 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final ViewHolder viewHolder=getViewHolder(position,convertView,parent);
+        convert(viewHolder,getItem(position));
+        return viewHolder.getConvertView();
+    }
+
+    public abstract void convert(ViewHolder helper,T item);
+
+    private ViewHolder getViewHolder(int position,View convertView,ViewGroup parent){
+        return ViewHolder.get(mContext,convertView,parent,mItemLayoutId,position);
+    }
 }

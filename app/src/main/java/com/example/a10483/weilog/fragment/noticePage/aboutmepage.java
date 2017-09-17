@@ -37,14 +37,14 @@ public class aboutmepage extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_aboutmepage, container, false);
         aboutme_listview=(ListView)view.findViewById(R.id.aboutme_listview);
-        initdata();
-        aboutmepageAdapter adapter=new aboutmepageAdapter(getContext(),aboutmedatas,R.layout.aboutmeitem);
-        aboutme_listview.setAdapter(adapter);
+        //initdata();
+        //aboutmepageAdapter adapter=new aboutmepageAdapter(getContext(),aboutmedatas,R.layout.aboutmeitem);
+        //aboutme_listview.setAdapter(adapter);
         return view;
     }
 
     public void initdata(){
-        aboutmedatas=new ArrayList<Logdata>();
+        /*aboutmedatas=new ArrayList<Logdata>();
         Logdata aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
@@ -75,8 +75,8 @@ public class aboutmepage extends Fragment {
         aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-    }
-    class aboutmepageAdapter extends CommonAdapter<Logdata>{
+    }*/
+    /*class aboutmepageAdapter extends CommonAdapter<Logdata>{
        public aboutmepageAdapter(Context context, List<Logdata> aboutmedatas,int layoutId){
            super(context,aboutmedatas,layoutId);
        }
@@ -87,7 +87,7 @@ public class aboutmepage extends Fragment {
                    .setText(R.id.from_device_inaboutme,aboutmedata.getfromdevice())
                    .setText(R.id.like_button_inaboutme,aboutmedata.getlike())
                    .setText(R.id.talk_button_inaboutme,aboutmedata.gettalk());
-       }
+       }*/
 
     }
 

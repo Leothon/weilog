@@ -39,9 +39,9 @@ public class hotpotpage extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.hotpotpager,container,false);
         hotpot_listview=(ListView)view.findViewById(R.id.hotpot_listview);
-        WeilogAdapter adapter=new WeilogAdapter(getActivity(),hotpotdata);
-        hotpot_listview.setAdapter(adapter);
-        hotpot_listview.setDividerHeight(0);
+        //WeilogAdapter adapter=new WeilogAdapter(getActivity(),hotpotdata);
+        //hotpot_listview.setAdapter(adapter);
+        //hotpot_listview.setDividerHeight(0);
         return view;
     }
 

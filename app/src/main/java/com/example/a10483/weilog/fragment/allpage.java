@@ -20,6 +20,7 @@ import android.widget.ListView;
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.utils.ViewHolder;
 import com.example.a10483.weilog.writeWeilog;
 
 import java.util.List;
@@ -37,7 +38,8 @@ public class allpage extends Fragment{
     private ListView allpage_listview;
     private FloatingActionButton cameraButton;
     private FloatingActionButton write_button;
-    private List<Weilog> weilogdata;
+    private List<String> allpagedata;
+    private WeilogAdapter mAdapter;
     public allpage() {
 
     }
@@ -56,8 +58,18 @@ public class allpage extends Fragment{
         allpage_listview=(ListView)view.findViewById(R.id.allpage_listview);
         //cameraButton=(FloatingActionButton)view.findViewById(R.id.camera_button);
         write_button=(FloatingActionButton)view.findViewById(R.id.write);
-        WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
-        allpage_listview.setAdapter(adapter);
+        //WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
+        //allpage_listview.setAdapter(adapter);
+        allpage_listview.setAdapter(mAdapter=new WeilogAdapter<String>(
+                getActivity(),allpagedata,R.layout.weilogitem) {
+                    @Override
+                    public void convert(ViewHolder helper, String item) {
+                        helper.setText(R.id.user_name,"Leothon");
+                    }
+                }
+
+                    );
+
         allpage_listview.setDividerHeight(0);
         setListener();
         return view;

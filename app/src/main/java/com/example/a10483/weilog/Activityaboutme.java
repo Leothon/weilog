@@ -48,9 +48,9 @@ public class Activityaboutme extends BaseActivity {
         searchmylog=(ImageView)findViewById(R.id.searchmylog);
         ListView aboutme_listview=(ListView)findViewById(R.id.aboutme_listview);
         View headitem=View.inflate(this,R.layout.aboutmeheaditem,null);
-        WeilogAdapter adapter=new WeilogAdapter(this,minedata);
+        //WeilogAdapter adapter=new WeilogAdapter(this,minedata);
         aboutme_listview.addHeaderView(headitem);
-        aboutme_listview.setAdapter(adapter);
+        //aboutme_listview.setAdapter(adapter);
         setListener();
 
     }
