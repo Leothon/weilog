@@ -1,6 +1,5 @@
 package com.example.a10483.weilog.fragment.noticePage;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,10 +9,7 @@ import android.widget.ListView;
 
 import com.example.a10483.weilog.Data.Logdata;
 import com.example.a10483.weilog.R;
-import com.example.a10483.weilog.utils.CommonAdapter;
-import com.example.a10483.weilog.utils.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class aboutmepage extends Fragment {
