@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -50,7 +51,7 @@ public class Activityaboutme extends BaseActivity {
     private LinearLayout fansclick;
     private WeilogAdapter mAdapter;
     private List<String> aboutmedata;
-    private Oauth2AccessToken AcessToken;
+    private Oauth2AccessToken AccessToken;
     private String uid;
     private static final String user_shou_url="https://api.weibo.com/2/users/show.json";
     @Override
@@ -58,9 +59,11 @@ public class Activityaboutme extends BaseActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activityaboutme);
-        AcessToken= AccessTokenKeeper.readAccessToken(this);
+        AccessToken= AccessTokenKeeper.readAccessToken(this);
+
         SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
         uid= sharedPreferences.getString("uid","");
+        Log.d("Activityaboutme",uid);
         toolbar_inme=(Toolbar)findViewById(R.id.toolbar_inme);
         setSupportActionBar(toolbar_inme);
         toolbar_inme.getBackground().setAlpha(0);
@@ -96,13 +99,15 @@ public class Activityaboutme extends BaseActivity {
             public void run() {
                 try{
                     String token=null;
-                    token=AcessToken.getToken().toString();
-                    String json= GetJson.getjson(user_shou_url+"?access_token="+token+"?uid="+uid);
+                    token=AccessToken.getToken().toString();
+                    String json= GetJson.getjson(user_shou_url+"?access_token="+token+"&uid="+uid);
+
                     Bundle bundle=new Bundle();
                     bundle.putString("jsondata",json);
                     Message message=new Message();
                     message.what=1;
                     message.setData(bundle);
+                    handler.sendMessage(message);
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -118,6 +123,7 @@ public class Activityaboutme extends BaseActivity {
             switch (msg.what){
                 case 1:
                     String jsondata=msg.getData().getString("jsondata");
+                    //Log.d("Activityaboutme",jsondata);
                     setdata(jsondata);
                     break;
                 default:
@@ -126,8 +132,10 @@ public class Activityaboutme extends BaseActivity {
         }
     };
     public void setdata(String json){
-        JSONObject jsonObject=new JSONObject();
+
+        //Log.d("Activityaboutme","如果看不到就是没执行");
         try{
+            JSONObject jsonObject=new JSONObject(json);
             String userName=jsonObject.getString("screen_name");
             String userAddress=jsonObject.getString("location");
             String userDescription=jsonObject.getString("description");
@@ -139,8 +147,8 @@ public class Activityaboutme extends BaseActivity {
             username_inme.setText(userName);
             address.setText(userAddress);
             talkofmine.setText(userDescription);
-            followcount.setText(userFollowersCount);
-            fanscount.setText(userFriendsCount);
+            followcount.setText(userFriendsCount);
+            fanscount.setText(userFollowersCount);
             if (userSex.equals("m")){
                 sex.setImageResource(R.drawable.male);
             }else if (userSex.equals("f")){
@@ -148,14 +156,14 @@ public class Activityaboutme extends BaseActivity {
             }else{
                 sex.setImageResource(R.drawable.unkownsex);
             }
-            //usericon_inme.setImageBitmap(getBitmapFromUrl(userProfileImageUrl));
-            /*new Thread(){
+            usericon_inme.setImageBitmap(getBitmapFromUrl(userProfileImageUrl));
+            new Thread(){
                 @Override
                 public void run() {
                     usericon_inme.setImageBitmap(getBitmapFromUrl(userProfileImageUrl));
                 }
             }.start();
-*/
+
 
         }catch (Exception e){
             e.printStackTrace();

@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity
                     String token=new String();
                     token=accessToken.getToken().toString();
                     String json= GetJson.getjson(get_uid_url+"?access_token="+token);
-                    Log.d("MainActivity",token);
+                    Log.d("MainActivity",json);
                     JSONObject jsonObject=new JSONObject(json);
                     String UID=jsonObject.getString("uid");
                     Log.d("MainActivity",UID);
