@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -21,8 +23,11 @@ import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.Logdata;
 import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.utils.GetJson;
 import com.example.a10483.weilog.utils.ViewHolder;
 import com.example.a10483.weilog.writeWeilog;
+import com.sina.weibo.sdk.auth.AccessTokenKeeper;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +47,8 @@ public class allpage extends Fragment{
     private FloatingActionButton write_button;
     private List<String> allpagedata;
     private WeilogAdapter mAdapter;
+    private Oauth2AccessToken accessToken;
+    private final static String get_timeline_url="https://api.weibo.com/2/statuses/home_timeline.json";
     public allpage() {
 
     }
@@ -62,7 +69,9 @@ public class allpage extends Fragment{
         write_button=(FloatingActionButton)view.findViewById(R.id.write);
         //WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         //allpage_listview.setAdapter(adapter);
+        accessToken=AccessTokenKeeper.readAccessToken(getContext());
         initdata();
+        getJson();
         allpage_listview.setAdapter(mAdapter=new WeilogAdapter<String>(
                 getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
@@ -76,6 +85,40 @@ public class allpage extends Fragment{
         allpage_listview.setDividerHeight(0);
         setListener();
         return view;
+    }
+    public void getJson(){
+        new Thread(){
+            public void run(){
+                try{
+                    String token= accessToken.getToken().toString();
+                    String timelinejson = GetJson.getjson(get_timeline_url + "?access_token=" + token+"&count="+30);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("timelinejson",timelinejson);
+                    Message message=new Message();
+                    message.what=1;
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+
+    public Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    String timeLineJson=msg.getData().getString("timelinejson");
+                    settimelineData(timeLineJson);
+            }
+        }
+    };
+
+    public void settimelineData(String str){
+
     }
     public void initdata(){
         allpagedata=new ArrayList<String>();

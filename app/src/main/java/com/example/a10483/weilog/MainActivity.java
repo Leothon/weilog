@@ -2,6 +2,7 @@ package com.example.a10483.weilog;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -52,6 +53,9 @@ public class MainActivity extends BaseActivity
 
     private Oauth2AccessToken accessToken;
     private final static String get_uid_url="https://api.weibo.com/2/account/get_uid.json";
+
+
+
     @Override
     public boolean releaseInstance() {
         return super.releaseInstance();
@@ -62,7 +66,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         accessToken=AccessTokenKeeper.readAccessToken(this);
-        getUID();
+        getJson();
 
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
@@ -105,21 +109,21 @@ public class MainActivity extends BaseActivity
 
 
     //用accesstoken获取UID并存入SharePreferences中
-    public  void getUID(){
+    public  void getJson(){
         new Thread(){
             @Override
             public void run() {
                 try{
-                    String token=new String();
-                    token=accessToken.getToken().toString();
-                    String json= GetJson.getjson(get_uid_url+"?access_token="+token);
-                    Log.d("MainActivity",json);
-                    JSONObject jsonObject=new JSONObject(json);
+                    String token=accessToken.getToken().toString();
+                    String uidjson= GetJson.getjson(get_uid_url+"?access_token="+token);
+                    //Log.d("MainActivity",json);
+                    JSONObject jsonObject=new JSONObject(uidjson);
                     String UID=jsonObject.getString("uid");
                     Log.d("MainActivity",UID);
                     SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
                     editor.putString("uid",UID);
                     editor.commit();
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -127,6 +131,7 @@ public class MainActivity extends BaseActivity
         }.start();
         //JSONObject jsonObject=new JSONObject(json);
     }
+
 
     public void setTabListener(){
         allPage.setOnClickListener(new View.OnClickListener() {

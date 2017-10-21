@@ -20,4 +20,6 @@ public class Weilog {
     public String getContent() {
         return content;
     }
+
+
 }
