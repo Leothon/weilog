@@ -57,13 +57,34 @@
                 android:text="微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容微博正文内容"
                 android:textColor="@color/black"
                 android:textSize="13dp" />
-            <ImageView
-                android:id="@+id/image_in_context"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/usericon"
-                android:layout_marginTop="3dp"
-                android:visibility="gone" />
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/image_in_context1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/usericon"
+                    android:layout_marginTop="3dp"/>
+                <ImageView
+                    android:id="@+id/image_in_context2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/usericon"
+                    android:layout_marginTop="3dp" />
+                <ImageView
+                    android:id="@+id/image_in_context3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/usericon"
+                    android:layout_marginTop="3dp" />
+            </LinearLayout>
+
             <VideoView
                 android:id="@+id/video_in_context"
                 android:layout_width="match_parent"
@@ -78,8 +99,20 @@
             android:id="@+id/share_layout"
             android:orientation="vertical"
             android:layout_marginTop="3dp"
-            android:visibility="gone"
             android:background="@color/backgrey">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/shareUsername"
+                    android:text="王尼玛"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15dp"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/share_context"

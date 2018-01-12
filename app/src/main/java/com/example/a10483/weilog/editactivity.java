@@ -1,5 +1,6 @@
 package com.example.a10483.weilog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.a10483.weilog.Adapter.editAdapter;
 import com.example.a10483.weilog.Data.editdata;
 
@@ -56,6 +59,9 @@ public class editactivity extends BaseActivity {
                 //弹出是否清空草稿箱
             }
         });
+
+
+
     }
 
 }
