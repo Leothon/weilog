@@ -1,17 +1,11 @@
 package com.example.a10483.weilog.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
-import com.example.a10483.weilog.Data.Logdata;
-import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.GetJson;
 import com.example.a10483.weilog.utils.ViewHolder;
@@ -31,10 +23,6 @@ import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.a10483.weilog.R.id.nav_view;
-import static com.example.a10483.weilog.R.id.user_head;
-import static com.example.a10483.weilog.R.id.user_name;
 
 public class allpage extends Fragment{
 

@@ -31,31 +31,29 @@ public class GetRequest {
 
 
 
-    public static JSONObject transjson(String url){
-        JSONObject json=new GetRequest().getRequest(url);
-        //System.out.println(json);
+   /* public static String  transjson(String url){
+        String  json=new GetRequest().getRequest(url);
         return json;
 
-    }
+    }*/
     JSONObject requestJson=null;
-    public   JSONObject  getRequest(String url){
+    public JSONObject  getRequest(String url){
 
 
-        RequestQueue queue1= MyApplication.requestQueue;
-        JsonObjectRequest getrequest=new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
+        RequestQueue queue= MyApplication.requestQueue;
+        JsonObjectRequest getrequest=new JsonObjectRequest(url,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 requestJson=jsonObject;
-                //System.out.print(requestJson);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                System.out.print("Error");
             }
         });
 
-        queue1.add(getrequest);
+        queue.add(getrequest);
         return requestJson;
     }
 }

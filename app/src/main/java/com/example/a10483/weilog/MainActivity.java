@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity
                     //Log.d("MainActivity",json);
                     JSONObject jsonObject=new JSONObject(uidjson);
                     String UID=jsonObject.getString("uid");
-                    Log.d("MainActivity",UID);
+                    //Log.d("MainActivity",UID);
                     SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
                     editor.putString("uid",UID);
                     editor.commit();

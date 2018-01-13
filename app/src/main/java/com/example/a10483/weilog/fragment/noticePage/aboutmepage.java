@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.a10483.weilog.Data.Logdata;
+import com.example.a10483.weilog.Data.status;
 import com.example.a10483.weilog.R;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 public class aboutmepage extends Fragment {
 
     private ListView aboutme_listview;
-    private List<Logdata> aboutmedatas;
+    private List<status> aboutmedatas;
 
     public aboutmepage() {
 
@@ -40,44 +40,44 @@ public class aboutmepage extends Fragment {
     }
 
     public void initdata(){
-        /*aboutmedatas=new ArrayList<Logdata>();
-        Logdata aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        /*aboutmedatas=new ArrayList<status>();
+        status aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
-        aboutmedata=new Logdata("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
+        aboutmedata=new status("Leothon","微博内容微博内容微博内容微博内容微博内容微博内容微博内容微博内容" +
                 "微博内容微博内容微博内容微博内容微博内容微博内容微博内容","nubia Z11miniS","10","190","1 小时前");
         aboutmedatas.add(aboutmedata);
     }*/
-    /*class aboutmepageAdapter extends CommonAdapter<Logdata>{
-       public aboutmepageAdapter(Context context, List<Logdata> aboutmedatas,int layoutId){
+    /*class aboutmepageAdapter extends CommonAdapter<status>{
+       public aboutmepageAdapter(Context context, List<status> aboutmedatas,int layoutId){
            super(context,aboutmedatas,layoutId);
        }
        @Override
-       public void convert(ViewHolder holder,final Logdata aboutmedata){
+       public void convert(ViewHolder holder,final status aboutmedata){
            holder.setText(R.id.user_name_inaboutme,aboutmedata.getUsername())
                    .setText(R.id.weilog_time_inaboutme,aboutmedata.getTime())
                    .setText(R.id.from_device_inaboutme,aboutmedata.getfromdevice())

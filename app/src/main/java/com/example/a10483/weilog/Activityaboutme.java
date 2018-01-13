@@ -18,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
+import com.example.a10483.weilog.Data.status;
 import com.example.a10483.weilog.utils.GetJson;
 import com.example.a10483.weilog.utils.GetRequest;
 import com.example.a10483.weilog.utils.ViewHolder;
 import com.example.a10483.weilog.utils.getFile;
+import com.google.gson.Gson;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
@@ -53,7 +55,7 @@ public class Activityaboutme extends BaseActivity {
     private LinearLayout followclick;
     private LinearLayout fansclick;
     private WeilogAdapter mAdapter;
-    private List<String> aboutmedata;
+    private List<status> aboutmedata;
     private Oauth2AccessToken AccessToken;
     private String uid;
     private static final String user_shou_url="https://api.weibo.com/2/users/show.json";
@@ -67,7 +69,7 @@ public class Activityaboutme extends BaseActivity {
 
         SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
         uid= sharedPreferences.getString("uid","");
-        Log.d("Activityaboutme",uid);
+        //Log.d("Activityaboutme",uid);
         toolbar_inme=(Toolbar)findViewById(R.id.toolbar_inme);
         setSupportActionBar(toolbar_inme);
         toolbar_inme.getBackground().setAlpha(0);
@@ -77,7 +79,7 @@ public class Activityaboutme extends BaseActivity {
         ListView aboutme_listview=(ListView)findViewById(R.id.aboutme_listview);
         View headitem=View.inflate(this,R.layout.aboutmeheaditem,null);
         //WeilogAdapter adapter=new WeilogAdapter(this,minedata);
-        initdata();
+        //initdata();
         aboutme_listview.addHeaderView(headitem);
         aboutme_listview.setAdapter(mAdapter=new WeilogAdapter(getApplicationContext(),aboutmedata,R.layout.weilogitem) {
             @Override
@@ -98,16 +100,18 @@ public class Activityaboutme extends BaseActivity {
     }
 
     public void getJsondata(){
-        String token=AccessToken.getToken().toString();
+        //String token=AccessToken.getToken().toString();
         new Thread(){
             @Override
             public void run() {
                 try{
 
-                    //String json= GetJson.getjson(user_shou_url+"?access_token="+token+"&uid="+uid);
-
+                    String token1=AccessToken.getToken().toString();
+                    String json= GetJson.getjson(user_shou_url+"?access_token="+token1+"&uid="+uid);
+                    String usertimeline=GetJson.getjson(user_timeline+"?access_token="+token1);
                     Bundle bundle=new Bundle();
-                    //bundle.putString("jsondata",json);
+                    bundle.putString("jsondata",json);
+                    bundle.putString("usertimeline",usertimeline);
                     Message message=new Message();
                     message.what=1;
                     message.setData(bundle);
@@ -121,9 +125,8 @@ public class Activityaboutme extends BaseActivity {
             }
         }.start();
 
-        JSONObject usertimeline=GetRequest.transjson(user_timeline+"?access_token="+token);
-        //System.out.print(usertimeline);
-        Log.d("Activityaboutme",usertimeline.toString());
+        //JSONObject  usertimeline=new GetRequest().getRequest(user_timeline+"?access_token="+token);
+        //Log.d("Activityaboutme",usertimeline+"jsondataaaaaaa");
         //getFile.getfile(usertimelinejson);
     }
     private Handler handler=new Handler(){
@@ -133,14 +136,21 @@ public class Activityaboutme extends BaseActivity {
                 case 1:
                     String jsondata=msg.getData().getString("jsondata");
                     //Log.d("Activityaboutme",jsondata);
-                    setdata(jsondata);
+                    String usertimeline=msg.getData().getString("usertimeline");
+                    settimelinedata(usertimeline);
+                    setuserdata(jsondata);
                     break;
                 default:
                     break;
             }
         }
     };
-    public void setdata(String json){
+
+    public void settimelinedata(String json){
+        Gson gson=new Gson();
+        status status=gson.fromJson(json,status.class);
+    }
+    public void setuserdata(String json){
 
         //Log.d("Activityaboutme","如果看不到就是没执行");
         try{
@@ -202,8 +212,8 @@ public class Activityaboutme extends BaseActivity {
         }
         return null;
     }
-    public void initdata(){
-        aboutmedata=new ArrayList<String>();
+    /*public void initdata(){
+        aboutmedata=new ArrayList<status>();
         String one=new String("Leothon");
         aboutmedata.add(one);
         String two=new String("Leothon");
@@ -225,7 +235,7 @@ public class Activityaboutme extends BaseActivity {
         String ten=new String("Leothon");
         aboutmedata.add(ten);
 
-    }
+    }*/
     public void setListener(){
         back_me.setOnClickListener(new View.OnClickListener() {
             @Override
