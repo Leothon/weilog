@@ -3,6 +3,7 @@ package com.example.a10483.weilog.utils;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -28,19 +29,24 @@ import java.util.Map;
 public class GetRequest {
 
 
-    String requestJson=null;
-    public String transJson(JSONObject jsonObject){
-        String requestJson=jsonObject.toString();
-        return requestJson;
-    }
 
-    public String getRequest(String url){
+
+    public static JSONObject transjson(String url){
+        JSONObject json=new GetRequest().getRequest(url);
+        //System.out.println(json);
+        return json;
+
+    }
+    JSONObject requestJson=null;
+    public   JSONObject  getRequest(String url){
+
 
         RequestQueue queue1= MyApplication.requestQueue;
         JsonObjectRequest getrequest=new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                requestJson=jsonObject.toString();
+                requestJson=jsonObject;
+                //System.out.print(requestJson);
             }
         }, new Response.ErrorListener() {
             @Override

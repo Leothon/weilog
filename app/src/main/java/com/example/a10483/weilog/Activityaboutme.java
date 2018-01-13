@@ -1,5 +1,6 @@
 package com.example.a10483.weilog;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.utils.GetJson;
+import com.example.a10483.weilog.utils.GetRequest;
 import com.example.a10483.weilog.utils.ViewHolder;
+import com.example.a10483.weilog.utils.getFile;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
@@ -54,6 +57,7 @@ public class Activityaboutme extends BaseActivity {
     private Oauth2AccessToken AccessToken;
     private String uid;
     private static final String user_shou_url="https://api.weibo.com/2/users/show.json";
+    private static final String user_timeline="https://api.weibo.com/2/statuses/user_timeline.json";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,16 +98,16 @@ public class Activityaboutme extends BaseActivity {
     }
 
     public void getJsondata(){
+        String token=AccessToken.getToken().toString();
         new Thread(){
             @Override
             public void run() {
                 try{
-                    String token=null;
-                    token=AccessToken.getToken().toString();
-                    String json= GetJson.getjson(user_shou_url+"?access_token="+token+"&uid="+uid);
+
+                    //String json= GetJson.getjson(user_shou_url+"?access_token="+token+"&uid="+uid);
 
                     Bundle bundle=new Bundle();
-                    bundle.putString("jsondata",json);
+                    //bundle.putString("jsondata",json);
                     Message message=new Message();
                     message.what=1;
                     message.setData(bundle);
@@ -116,6 +120,11 @@ public class Activityaboutme extends BaseActivity {
 
             }
         }.start();
+
+        JSONObject usertimeline=GetRequest.transjson(user_timeline+"?access_token="+token);
+        //System.out.print(usertimeline);
+        Log.d("Activityaboutme",usertimeline.toString());
+        //getFile.getfile(usertimelinejson);
     }
     private Handler handler=new Handler(){
         @Override
