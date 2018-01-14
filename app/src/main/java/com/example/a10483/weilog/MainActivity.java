@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         accessToken=AccessTokenKeeper.readAccessToken(this);
-        getJson();
+        //getJson();
 
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity
 
 
     //用accesstoken获取UID并存入SharePreferences中
-    public  void getJson(){
+    /*public  void getJson(){
         new Thread(){
             @Override
             public void run() {
@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity
             }
         }.start();
         //JSONObject jsonObject=new JSONObject(json);
-    }
+    }*/
 
 
     public void setTabListener(){

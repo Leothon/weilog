@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.a10483.weilog.Data.Weilog;
+import com.example.a10483.weilog.Data.statusBean;
 import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -27,9 +29,9 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
 
     protected LayoutInflater inflater;
     protected Context mContext;
-    protected List<T> weilogdatas;
+    protected ArrayList<T> weilogdatas;
     protected final int mItemLayoutId;
-    public WeilogAdapter(Context context, List<T> weilogdata ,int ItemLayoutId){
+    public WeilogAdapter(Context context, ArrayList<T> weilogdata ,int ItemLayoutId){
         inflater= LayoutInflater.from(context);
         this.mContext=context;
         weilogdatas=weilogdata;

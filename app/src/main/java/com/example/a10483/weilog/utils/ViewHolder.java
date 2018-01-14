@@ -53,7 +53,7 @@ public class ViewHolder {
         return mConvertView;
     }
     //设置文字的通用方法
-    public ViewHolder setText(int viewId, String text)
+    public  ViewHolder setText(int viewId, String text)
     {
         TextView tv = getView(viewId);
         tv.setText(text);

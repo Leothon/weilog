@@ -17,14 +17,14 @@ public class user {
     //private boolean isfollowme;
 
 
-    public user(String name,String location,String description,String follower,String friends,String status){
+    /*public user(String name,String location,String description,String follower,String friends,String status){
         this.name=name;
         this.description=description;
         this.location=location;
         this.follower=follower;
         this.friends=friends;
         this.status=status;
-    }
+    }*/
 
     public String getName(){
         return name;

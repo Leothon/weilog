@@ -1,6 +1,5 @@
 package com.example.a10483.weilog;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -18,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
-import com.example.a10483.weilog.Data.status;
+import com.example.a10483.weilog.Data.dataBean;
+import com.example.a10483.weilog.Data.statusBean;
+import com.example.a10483.weilog.utils.DownAsynctask;
 import com.example.a10483.weilog.utils.GetJson;
-import com.example.a10483.weilog.utils.GetRequest;
 import com.example.a10483.weilog.utils.ViewHolder;
-import com.example.a10483.weilog.utils.getFile;
 import com.google.gson.Gson;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -36,6 +34,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Activityaboutme extends BaseActivity {
 
@@ -55,9 +56,11 @@ public class Activityaboutme extends BaseActivity {
     private LinearLayout followclick;
     private LinearLayout fansclick;
     private WeilogAdapter mAdapter;
-    private List<status> aboutmedata;
+    private ArrayList<dataBean> aboutmedata;
     private Oauth2AccessToken AccessToken;
     private String uid;
+    private ExecutorService es;
+    private TextView text;
     private static final String user_shou_url="https://api.weibo.com/2/users/show.json";
     private static final String user_timeline="https://api.weibo.com/2/statuses/user_timeline.json";
     @Override
@@ -66,7 +69,7 @@ public class Activityaboutme extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activityaboutme);
         AccessToken= AccessTokenKeeper.readAccessToken(this);
-
+        String token=AccessToken.getToken().toString();
         SharedPreferences sharedPreferences=getSharedPreferences("data",MODE_PRIVATE);
         uid= sharedPreferences.getString("uid","");
         //Log.d("Activityaboutme",uid);
@@ -77,16 +80,21 @@ public class Activityaboutme extends BaseActivity {
         info_me=(TextView)findViewById(R.id.infoaboutme);
         searchmylog=(ImageView)findViewById(R.id.searchmylog);
         ListView aboutme_listview=(ListView)findViewById(R.id.aboutme_listview);
+        aboutmedata=new ArrayList<>();
         View headitem=View.inflate(this,R.layout.aboutmeheaditem,null);
         //WeilogAdapter adapter=new WeilogAdapter(this,minedata);
         //initdata();
         aboutme_listview.addHeaderView(headitem);
+
         aboutme_listview.setAdapter(mAdapter=new WeilogAdapter(getApplicationContext(),aboutmedata,R.layout.weilogitem) {
             @Override
             public void convert(ViewHolder helper, Object item) {
                 helper.setText(R.id.user_name,"Leothon");
+                //helper.setText(R.id.weilog_context,test);
             }
         });
+        es= Executors.newFixedThreadPool(1);
+        new DownAsynctask(aboutmedata,mAdapter,this).executeOnExecutor(es,user_timeline+"?access_token="+token);
 
         usericon_inme=(ImageView)findViewById(R.id.usericon_inme);
         username_inme=(TextView)findViewById(R.id.user_name_in_me);
@@ -95,11 +103,15 @@ public class Activityaboutme extends BaseActivity {
         address=(TextView)findViewById(R.id.user_adress);
         followcount=(TextView)findViewById(R.id.followcount);
         fanscount=(TextView)findViewById(R.id.fanscount);
+        text=(TextView)findViewById(R.id.weilog_context);
         setListener();
-        getJsondata();
+
+        //getJsondata();
     }
 
-    public void getJsondata(){
+
+
+    /*public void getJsondata(){
         //String token=AccessToken.getToken().toString();
         new Thread(){
             @Override
@@ -144,12 +156,14 @@ public class Activityaboutme extends BaseActivity {
                     break;
             }
         }
-    };
+    };*/
 
-    public void settimelinedata(String json){
+    /*public void settimelinedata(String json){
         Gson gson=new Gson();
-        status status=gson.fromJson(json,status.class);
-    }
+        aboutmedata=new ArrayList<statusBean>();
+        statusBean statusBean =gson.fromJson(json,statusBean.class);
+        aboutmedata.add(statusBean);
+    }*/
     public void setuserdata(String json){
 
         //Log.d("Activityaboutme","如果看不到就是没执行");
@@ -213,27 +227,9 @@ public class Activityaboutme extends BaseActivity {
         return null;
     }
     /*public void initdata(){
-        aboutmedata=new ArrayList<status>();
-        String one=new String("Leothon");
-        aboutmedata.add(one);
-        String two=new String("Leothon");
-        aboutmedata.add(two);
-        String three=new String("Leothon");
-        aboutmedata.add(three);
-        String four=new String("Leothon");
-        aboutmedata.add(four);
-        String five=new String("Leothon");
-        aboutmedata.add(five);
-        String six=new String("Leothon");
-        aboutmedata.add(six);
-        String seven=new String("Leothon");
-        aboutmedata.add(seven);
-        String eight=new String("Leothon");
-        aboutmedata.add(eight);
-        String nine=new String("Leothon");
-        aboutmedata.add(nine);
-        String ten=new String("Leothon");
-        aboutmedata.add(ten);
+        aboutmedata=new ArrayList<statusBean>();
+        statusBean s=new statusBean();
+        aboutmedata.add(s);
 
     }*/
     public void setListener(){

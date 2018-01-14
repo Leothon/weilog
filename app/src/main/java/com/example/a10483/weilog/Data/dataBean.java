@@ -1,25 +1,34 @@
 package com.example.a10483.weilog.Data;
 
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
 /**
- * Created by 10483 on 2017/6/5.
+ * Created by 10483 on 2018/1/14.
  */
 
-public class status {
+public class dataBean {
 
     private String created_at;
     private String text;
-    //private String ImageUrl1,ImageUrl2,ImageUrl3;
     private String attitudes_count;
     private String comments_count;
     private String reposts_count;
-
-    public status(String created_at, String text,
-                  String attitudes_count, String comments_count, String reposts_count) {
+    private ArrayList<user> users;
+     /*public dataBean(String created_at, String text,
+                      String attitudes_count, String comments_count, String reposts_count) {
         this.created_at = created_at;
         this.text = text;
         this.attitudes_count = attitudes_count;
         this.comments_count = comments_count;
         this.reposts_count = reposts_count;
+    }*/
+
+    public ArrayList<user> getUsers(){
+        return users;
+    }
+    public void setUsers(ArrayList<user> users){
+        this.users=users;
     }
 
     public String getCreated_at() {
@@ -66,4 +75,3 @@ public class status {
 
 
 }
-

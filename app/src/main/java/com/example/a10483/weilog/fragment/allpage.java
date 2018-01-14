@@ -33,7 +33,7 @@ public class allpage extends Fragment{
     private ListView allpage_listview;
     private FloatingActionButton cameraButton;
     private FloatingActionButton write_button;
-    private List<String> allpagedata;
+    private ArrayList<String> allpagedata;
     private WeilogAdapter mAdapter;
     private Oauth2AccessToken accessToken;
     private final static String get_timeline_url="https://api.weibo.com/2/statuses/home_timeline.json";
@@ -59,7 +59,7 @@ public class allpage extends Fragment{
         //allpage_listview.setAdapter(adapter);
         accessToken=AccessTokenKeeper.readAccessToken(getContext());
         initdata();
-        getJson();
+        //getJson();
         allpage_listview.setAdapter(mAdapter=new WeilogAdapter<String>(
                 getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
@@ -74,7 +74,7 @@ public class allpage extends Fragment{
         setListener();
         return view;
     }
-    public void getJson(){
+    /*public void getJson(){
         new Thread(){
             public void run(){
                 try{
@@ -91,10 +91,10 @@ public class allpage extends Fragment{
                 }
             }
         }.start();
-    }
+    }*/
 
 
-    public Handler handler=new Handler(){
+    /*public Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
@@ -103,7 +103,7 @@ public class allpage extends Fragment{
                     settimelineData(timeLineJson);
             }
         }
-    };
+    };*/
 
     public void settimelineData(String str){
 

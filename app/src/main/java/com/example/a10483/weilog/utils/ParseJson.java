@@ -1,5 +1,8 @@
 package com.example.a10483.weilog.utils;
 
+import com.example.a10483.weilog.Data.statusBean;
+import com.google.gson.Gson;
+
 /**
  * Created by 10483 on 2017/9/16.
  */
@@ -13,4 +16,10 @@ public class ParseJson {
      * 难点2、数据返回的方法
      * 难点3、Adapter重新修改编写
      */
+
+    public static statusBean parseJson(String json){
+        Gson gson=new Gson();
+        statusBean sb=gson.fromJson(json,statusBean.class);
+        return sb;
+    }
 }
