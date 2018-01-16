@@ -31,6 +31,7 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
     protected Context mContext;
     protected ArrayList<T> weilogdatas;
     protected final int mItemLayoutId;
+    private int position;
     public WeilogAdapter(Context context, ArrayList<T> weilogdata ,int ItemLayoutId){
         inflater= LayoutInflater.from(context);
         this.mContext=context;
@@ -43,6 +44,10 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
         return weilogdatas.size();
 
     }
+    public ArrayList<T> getDatas() {
+        return weilogdatas;
+    }
+
 
     /*@Override
     public View getView(int position, View contertView, ViewGroup parent) {
@@ -92,6 +97,9 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
         public TextView like_button;
     }*/
 
+    public int getPosition(){
+        return position;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -100,6 +108,7 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
 
     @Override
     public T getItem(int position) {
+        this.position = position;
         return weilogdatas.get(position);
     }
     @Override

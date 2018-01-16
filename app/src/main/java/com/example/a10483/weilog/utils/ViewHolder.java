@@ -2,6 +2,7 @@ package com.example.a10483.weilog.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,14 @@ public class ViewHolder {
     {
         TextView tv = getView(viewId);
         tv.setText(text);
+        tv.setAutoLinkMask(Linkify.WEB_URLS);
 
+        return this;
+    }
+
+    public ViewHolder setCount(int viewId,int count){
+        TextView textcount=getView(viewId);
+        textcount.setText(""+count);//单纯用count做参数，setText会把count当作ResourceId使用导致没有找到错误
         return this;
     }
 

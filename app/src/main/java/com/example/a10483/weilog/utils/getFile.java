@@ -2,6 +2,7 @@ package com.example.a10483.weilog.utils;
 
 import android.content.Context;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -19,29 +20,52 @@ import java.io.OutputStream;
 
 public class getFile {
 
+
     public static void getfile(String string){
 
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            String sdPath=Environment.getExternalStorageDirectory().getAbsolutePath();
-            String filePath="";
-            File file=new File(Environment.getExternalStorageDirectory(),"json.txt");
-            if(file.exists()){
-                filePath=file.getAbsolutePath();
-            }
+        String filePath = null;
+
+        boolean hasSDCard =Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+
+        if (hasSDCard) {
+
+            filePath =Environment.getExternalStorageDirectory().toString() + File.separator +"json.txt";
+
+        } else
+
+            filePath =Environment.getDownloadCacheDirectory().toString() + File.separator +"json.txt";
 
 
-            try {
-                BufferedWriter bf=new BufferedWriter(new FileWriter(file,true));
-                bf.write(string);
-                bf.flush();
-                bf.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        try {
+
+            File file = new File(filePath);
+
+            if (!file.exists()) {
+
+                File dir = new File(file.getParent());
+
+                dir.mkdirs();
+
+                file.createNewFile();
+
             }
+
+            FileOutputStream outStream = new FileOutputStream(file);
+
+            outStream.write(string.getBytes());
+
+            outStream.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
 
 
 
         }
 
     }
-}
+

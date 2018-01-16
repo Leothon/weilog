@@ -7,6 +7,8 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +16,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
+import com.example.a10483.weilog.Data.dataBean;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.utils.DownAsynctask;
 import com.example.a10483.weilog.utils.GetJson;
+import com.example.a10483.weilog.utils.UsualUtil;
 import com.example.a10483.weilog.utils.ViewHolder;
+import com.example.a10483.weilog.utils.getFile;
 import com.example.a10483.weilog.writeWeilog;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class allpage extends Fragment{
 
@@ -33,9 +43,10 @@ public class allpage extends Fragment{
     private ListView allpage_listview;
     private FloatingActionButton cameraButton;
     private FloatingActionButton write_button;
-    private ArrayList<String> allpagedata;
+    private ArrayList<dataBean> allpagedata;
     private WeilogAdapter mAdapter;
     private Oauth2AccessToken accessToken;
+    private ExecutorService es;
     private final static String get_timeline_url="https://api.weibo.com/2/statuses/home_timeline.json";
     public allpage() {
 
@@ -53,26 +64,43 @@ public class allpage extends Fragment{
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_allpage,container,false);
         allpage_listview=(ListView)view.findViewById(R.id.allpage_listview);
+        allpage_listview.setVerticalScrollBarEnabled(false);
         //cameraButton=(FloatingActionButton)view.findViewById(R.id.camera_button);
         write_button=(FloatingActionButton)view.findViewById(R.id.write);
         //WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         //allpage_listview.setAdapter(adapter);
         accessToken=AccessTokenKeeper.readAccessToken(getContext());
-        initdata();
+        String token= accessToken.getToken().toString();
+        //initdata();
         //getJson();
-        allpage_listview.setAdapter(mAdapter=new WeilogAdapter<String>(
-                getActivity(),allpagedata,R.layout.weilogitem) {
+        allpagedata=new ArrayList<>();//记得初始化，否则数据无法绑定
+        allpage_listview.setAdapter(mAdapter=new WeilogAdapter(getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
-                    public void convert(ViewHolder helper, String item) {
-                        helper.setText(R.id.user_name,"Leothon");
+                    public void convert(ViewHolder helper, Object item) {
+                        allpagedata=this.getDatas();
+                        dataBean db=allpagedata.get(getPosition());
+                        setdata(helper,db);
                     }
                 }
 
                     );
 
+        es= Executors.newFixedThreadPool(1);
+        new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token);
         allpage_listview.setDividerHeight(0);
         setListener();
         return view;
+    }
+    public void setdata(ViewHolder helper,dataBean db){
+        String timetext= UsualUtil.transTime(db.getCreated_at());
+        helper.setText(R.id.weilog_context,db.getText());
+        helper.setCount(R.id.talk_button,db.getComments_count());
+        helper.setCount(R.id.like_button,db.getAttitudes_count());
+        helper.setCount(R.id.share_button,db.getReposts_count());
+        helper.setText(R.id.weilog_time,timetext);
+        helper.setText(R.id.from_device,UsualUtil.parserFrom(db.getSource()));
+        //Log.d("allpage",db.getSource());
+
     }
     /*public void getJson(){
         new Thread(){
@@ -105,10 +133,8 @@ public class allpage extends Fragment{
         }
     };*/
 
-    public void settimelineData(String str){
 
-    }
-    public void initdata(){
+    /*public void initdata(){
         allpagedata=new ArrayList<String>();
         String one=new String("Leothon");
         allpagedata.add(one);
@@ -131,7 +157,7 @@ public class allpage extends Fragment{
         String ten=new String("Leothon");
         allpagedata.add(ten);
 
-    }
+    }*/
     public void setListener(){
         write_button.setOnClickListener(new View.OnClickListener() {
             @Override

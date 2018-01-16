@@ -60,7 +60,7 @@ public class Activityaboutme extends BaseActivity {
     private Oauth2AccessToken AccessToken;
     private String uid;
     private ExecutorService es;
-    private TextView text;
+    //private TextView text;
     private static final String user_shou_url="https://api.weibo.com/2/users/show.json";
     private static final String user_timeline="https://api.weibo.com/2/statuses/user_timeline.json";
     @Override
@@ -79,9 +79,9 @@ public class Activityaboutme extends BaseActivity {
         back_me=(ImageView)findViewById(R.id.back_in_me);
         info_me=(TextView)findViewById(R.id.infoaboutme);
         searchmylog=(ImageView)findViewById(R.id.searchmylog);
-        ListView aboutme_listview=(ListView)findViewById(R.id.aboutme_listview);
+        final ListView aboutme_listview=(ListView)findViewById(R.id.aboutme_listview);
         aboutmedata=new ArrayList<>();
-        View headitem=View.inflate(this,R.layout.aboutmeheaditem,null);
+        final View headitem=View.inflate(this,R.layout.aboutmeheaditem,null);
         //WeilogAdapter adapter=new WeilogAdapter(this,minedata);
         //initdata();
         aboutme_listview.addHeaderView(headitem);
@@ -89,10 +89,21 @@ public class Activityaboutme extends BaseActivity {
         aboutme_listview.setAdapter(mAdapter=new WeilogAdapter(getApplicationContext(),aboutmedata,R.layout.weilogitem) {
             @Override
             public void convert(ViewHolder helper, Object item) {
-                helper.setText(R.id.user_name,"Leothon");
-                //helper.setText(R.id.weilog_context,test);
+                aboutmedata=this.getDatas();
+                dataBean db=aboutmedata.get(getPosition());
+                setData(helper,db);
+
             }
         });
+        /*aboutme_listview.setAdapter(mAdapter=new WeilogAdapter(getApplicationContext(),aboutmedata,R.layout.weilogitem) {
+            @Override
+            public void convert(ViewHolder helper, dataBean db) {
+                //helper.setText(R.id.user_name,"Leothon");
+
+                DownAsynctask.updateUI(helper);
+                //helper.setText(R.id.weilog_context,test);
+            }
+        });*/
         es= Executors.newFixedThreadPool(1);
         new DownAsynctask(aboutmedata,mAdapter,this).executeOnExecutor(es,user_timeline+"?access_token="+token);
 
@@ -103,7 +114,7 @@ public class Activityaboutme extends BaseActivity {
         address=(TextView)findViewById(R.id.user_adress);
         followcount=(TextView)findViewById(R.id.followcount);
         fanscount=(TextView)findViewById(R.id.fanscount);
-        text=(TextView)findViewById(R.id.weilog_context);
+        //text=(TextView)findViewById(R.id.weilog_context);
         setListener();
 
         //getJsondata();
@@ -111,6 +122,16 @@ public class Activityaboutme extends BaseActivity {
 
 
 
+
+    public void setData(ViewHolder helper,dataBean db){
+        /*String attitudes=Integer.toString(db.getAttitudes_count());
+        String reposts=Integer.toString(db.getReposts_count());
+        String comments=Integer.toString(db.getComments_count());*/
+        helper.setText(R.id.weilog_context,db.getText());
+        helper.setCount(R.id.like_button,db.getAttitudes_count());
+        helper.setCount(R.id.share_button,db.getReposts_count());
+        helper.setCount(R.id.talk_button,db.getComments_count());
+    }
     /*public void getJsondata(){
         //String token=AccessToken.getToken().toString();
         new Thread(){

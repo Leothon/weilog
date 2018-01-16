@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.dataBean;
 import com.example.a10483.weilog.Data.statusBean;
+import com.example.a10483.weilog.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -63,6 +64,7 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
                 dataBeans.add(db);
             }
             adapter.notifyDataSetChanged();
+
             /*if(sb.data==null){
                 return;
             }*/
@@ -73,5 +75,13 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
         }else{
             Toast.makeText(context,"网络异常",Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+
+    public static void updateUI(ViewHolder helper){
+        helper.setText(R.id.user_name,"Context");
+        helper.setText(R.id.weilog_context,"dauobfaubfoaibfoahfoalibfnia");
+        //for(int i=0;i<)
     }
 }

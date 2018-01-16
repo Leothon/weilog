@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         open_nav=(ImageView)findViewById(R.id.open_nav);
