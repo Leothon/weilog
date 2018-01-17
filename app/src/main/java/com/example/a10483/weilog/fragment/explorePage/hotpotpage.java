@@ -1,18 +1,12 @@
 package com.example.a10483.weilog.fragment.explorePage;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.a10483.weilog.Adapter.WeilogAdapter;
-import com.example.a10483.weilog.Adapter.WeilogFragmentPagerAdapter;
-import com.example.a10483.weilog.Data.Weilog;
 import com.example.a10483.weilog.R;
 
 import java.util.List;
@@ -20,7 +14,7 @@ import java.util.List;
 public class hotpotpage extends Fragment {
 
     private ListView hotpot_listview;
-    private List<Weilog> hotpotdata;
+    //private List<Weilog> hotpotdata;
 
     public hotpotpage() {
 

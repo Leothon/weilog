@@ -14,8 +14,9 @@ public class dataBean {
     private int  attitudes_count;
     private int  comments_count;
     private int  reposts_count;
-    private ArrayList<user> users;
+    private user users;
     private String source;
+    private ArrayList<picUrls> pics_urls;
      /*public dataBean(String created_at, String text,
                       String attitudes_count, String comments_count, String reposts_count) {
         this.created_at = created_at;
@@ -25,16 +26,22 @@ public class dataBean {
         this.reposts_count = reposts_count;
     }*/
 
+    public ArrayList<picUrls> getPics_urls(){
+        return pics_urls;
+    }
+    public void setPics_urls(ArrayList<picUrls> pics_urls){
+        this.pics_urls=pics_urls;
+    }
     public String getSource(){
         return source;
     }
     public void setSource(String source){
         this.source=source;
     }
-    public ArrayList<user> getUsers(){
+    public user getUsers(){
         return users;
     }
-    public void setUsers(ArrayList<user> users){
+    public void setUsers(user users){
         this.users=users;
     }
 

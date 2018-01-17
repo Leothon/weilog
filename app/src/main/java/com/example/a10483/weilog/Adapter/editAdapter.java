@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.a10483.weilog.Data.editdata;
 import com.example.a10483.weilog.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -19,15 +16,15 @@ import java.util.List;
  */
 
 public class editAdapter extends BaseAdapter {
-    private List<editdata> editdataLists;
+    //private List<editdata> editdataLists;
     private LayoutInflater layoutInflater;
 
     private TextView edit_content;
     private TextView edit_time;
-    public editAdapter(Context context,List<editdata> editdataList){
+    /*public editAdapter(Context context,List<editdata> editdataList){
         layoutInflater=LayoutInflater.from(context);
         editdataLists=editdataList;
-    }
+    }*/
     @Override
     public Object getItem(int i) {
         return null;

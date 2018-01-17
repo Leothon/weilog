@@ -17,6 +17,8 @@ import android.widget.ListView;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.dataBean;
+import com.example.a10483.weilog.Data.picUrls;
+import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.DownAsynctask;
 import com.example.a10483.weilog.utils.GetJson;
@@ -78,6 +80,7 @@ public class allpage extends Fragment{
                     @Override
                     public void convert(ViewHolder helper, Object item) {
                         allpagedata=this.getDatas();
+
                         dataBean db=allpagedata.get(getPosition());
                         setdata(helper,db);
                     }
@@ -92,6 +95,20 @@ public class allpage extends Fragment{
         return view;
     }
     public void setdata(ViewHolder helper,dataBean db){
+        user us=db.getUsers();
+
+        ArrayList<picUrls> picUrlsdata=db.getPics_urls();
+
+
+        //Log.d("allpage","图片链接"+picUrlsdata);
+        /*picUrls pu1=picUrlsdata.get(0);
+        picUrls pu2=picUrlsdata.get(1);
+        picUrls pu3=picUrlsdata.get(2);
+        Log.d("allpage","图片链接是"+pu1);
+        Log.d("allpage","图片链接是"+pu2);
+        Log.d("allpage","图片链接是"+pu3);*/
+        //user us=userdata.get(0);//数组中仅有一项数据
+        helper.setText(R.id.user_name,us.getName());
         String timetext= UsualUtil.transTime(db.getCreated_at());
         helper.setText(R.id.weilog_context,db.getText());
         helper.setCount(R.id.talk_button,db.getComments_count());

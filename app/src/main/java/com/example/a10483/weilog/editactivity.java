@@ -1,8 +1,6 @@
 package com.example.a10483.weilog;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,16 +9,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.example.a10483.weilog.Adapter.editAdapter;
-import com.example.a10483.weilog.Data.editdata;
 
 import java.util.List;
 
 public class editactivity extends BaseActivity {
 
-    private List<editdata> editdataList;
+    //private List<editdata> editdataList;
     private ListView edit_listview;
     private ImageView backfromedit;
     private TextView clearedit;
@@ -34,8 +29,8 @@ public class editactivity extends BaseActivity {
         edit_toolbar=(Toolbar)findViewById(R.id.edit_toolbar);
         setSupportActionBar(edit_toolbar);
         edit_listview=(ListView)findViewById(R.id.edit_listview);
-        editAdapter adapter=new editAdapter(this,editdataList);
-        edit_listview.setAdapter(adapter);
+       // editAdapter adapter=new editAdapter(this,editdataList);
+        //edit_listview.setAdapter(adapter);
         setListener();
 
     }

@@ -7,7 +7,9 @@ import android.widget.Toast;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.dataBean;
+import com.example.a10483.weilog.Data.picUrls;
 import com.example.a10483.weilog.Data.statusBean;
+import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -49,7 +51,6 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
             Gson gson=new Gson();
             String jsonString=new String(bytes);
             //getFile.getfile(jsonString);
-            //statusBean sb=ParseJson.parseJson(jsonString);
             statusBean sb=gson.fromJson(jsonString,statusBean.class);
 
             JsonParser parser=new JsonParser();
@@ -58,9 +59,21 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
 
             //getFile.getfile(jsonArray.toString());
             //Log.d("DownAsynctask",jsonArray.toString());
-            for(int i=0;i<jsonArray.size();i++){
+            ArrayList<picUrls> pus=new ArrayList<>();
+            for(int i=0;i<jsonArray.size();i++){//该循环是逐条获取微博信息
                 JsonElement el=jsonArray.get(i);//获取到每一条微博的对象
                 dataBean db=gson.fromJson(el,dataBean.class);
+                JsonObject singleweibojsonobject=el.getAsJsonObject();
+                JsonObject userjsonobject=singleweibojsonobject.getAsJsonObject("user");
+                user us=gson.fromJson(userjsonobject,user.class);//用户信息不是数组所以直接解析加入
+                JsonArray picjsonarray=singleweibojsonobject.getAsJsonArray("pic_urls");
+                for(int j=0;j<picjsonarray.size();j++){//该循环是逐条获取图片链接
+                    JsonElement picjsonelement=picjsonarray.get(j);
+                    picUrls pu=gson.fromJson(picjsonelement,picUrls.class);
+                    pus.add(pu);//获取到每条微博中的图片链接，把他添加到一个数组中
+                }
+                db.setPics_urls(pus);//把数组添加到统一的databean中便于处理
+                db.setUsers(us);
                 dataBeans.add(db);
             }
             adapter.notifyDataSetChanged();

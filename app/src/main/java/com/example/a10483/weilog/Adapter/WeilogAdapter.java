@@ -1,28 +1,14 @@
 package com.example.a10483.weilog.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.VideoView;
 
-import com.example.a10483.weilog.Data.Weilog;
-import com.example.a10483.weilog.Data.statusBean;
-import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.ViewHolder;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.zip.Inflater;
 
 //通用的Adapter，使用时只需要引用内部类即可调用，参数为上下文，数据List，Item的Id。
 public abstract class WeilogAdapter<T> extends BaseAdapter {
