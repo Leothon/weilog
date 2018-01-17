@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class picUrls {
 
-    private ArrayList<String> pic_urls=new ArrayList<>();
+    private String  thumbnail_pic;
 
-    public ArrayList<String> getPic_urls(){
-        return pic_urls;
+    public String  getThumbnail_pic(){
+        return thumbnail_pic;
     }
 
-    public void setPic_urls(ArrayList<String> pic_urls){
-        this.pic_urls=pic_urls;
+    public void setThumbnail_pic(String thumbnail_pic){
+        this.thumbnail_pic=thumbnail_pic;
     }
 }

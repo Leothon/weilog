@@ -2,6 +2,7 @@ package com.example.a10483.weilog.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -76,11 +77,36 @@ public class ViewHolder {
         view.setImageResource(drawableId);
         return this;
     }
+
+    public ViewHolder setWeightVisible(int viewId,int bool){//第二个参数是表示该控件三种状态：0-gone，1-visible，2-invisible
+        View view=getView(viewId);
+        if(bool==0){
+            view.setVisibility(View.GONE);
+        }else if(bool==1){
+            view.setVisibility(View.VISIBLE);
+        }else{
+            view.setVisibility(View.INVISIBLE);
+        }
+        return this;
+
+    }
     //设置网络图片的通用方法
-    public ViewHolder setImageBitmap(int viewId, Bitmap bm)
+    /*public ViewHolder setImageBitmap(int viewId, Bitmap bm)
     {
         ImageView view = getView(viewId);
         view.setImageBitmap(bm);
+        return this;
+    }*/
+    public ViewHolder setImageUrl(int viewId, String url){
+        final ImageView view=getView(viewId);
+        AsyncImageLoader asyncImageLoader=new AsyncImageLoader();
+        asyncImageLoader.loadDrawable(url, new AsyncImageLoader.ImageCallback() {
+            @Override
+            public void imageLoaded(Drawable imageDrawable) {
+                //ImageView view=getView(viewId);
+                view.setImageDrawable(imageDrawable);
+            }
+        });
         return this;
     }
 

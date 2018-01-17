@@ -1,9 +1,14 @@
 package com.example.a10483.weilog.fragment;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +25,7 @@ import com.example.a10483.weilog.Data.dataBean;
 import com.example.a10483.weilog.Data.picUrls;
 import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.utils.AsyncImageLoader;
 import com.example.a10483.weilog.utils.DownAsynctask;
 import com.example.a10483.weilog.utils.GetJson;
 import com.example.a10483.weilog.utils.UsualUtil;
@@ -49,6 +55,7 @@ public class allpage extends Fragment{
     private WeilogAdapter mAdapter;
     private Oauth2AccessToken accessToken;
     private ExecutorService es;
+
     private final static String get_timeline_url="https://api.weibo.com/2/statuses/home_timeline.json";
     public allpage() {
 
@@ -73,14 +80,11 @@ public class allpage extends Fragment{
         //allpage_listview.setAdapter(adapter);
         accessToken=AccessTokenKeeper.readAccessToken(getContext());
         String token= accessToken.getToken().toString();
-        //initdata();
-        //getJson();
         allpagedata=new ArrayList<>();//记得初始化，否则数据无法绑定
         allpage_listview.setAdapter(mAdapter=new WeilogAdapter(getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
                     public void convert(ViewHolder helper, Object item) {
                         allpagedata=this.getDatas();
-
                         dataBean db=allpagedata.get(getPosition());
                         setdata(helper,db);
                     }
@@ -90,7 +94,7 @@ public class allpage extends Fragment{
 
         es= Executors.newFixedThreadPool(1);
         new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token);
-        allpage_listview.setDividerHeight(0);
+        allpage_listview.setDividerHeight(1);
         setListener();
         return view;
     }
@@ -98,16 +102,35 @@ public class allpage extends Fragment{
         user us=db.getUsers();
 
         ArrayList<picUrls> picUrlsdata=db.getPics_urls();
+        int[] pic=new int[9];
+        pic[0]=R.id.image_in_context1;
+        pic[1]=R.id.image_in_context2;
+        pic[2]=R.id.image_in_context3;
+        pic[3]=R.id.image_in_context4;
+        pic[4]=R.id.image_in_context5;
+        pic[5]=R.id.image_in_context6;
+        pic[6]=R.id.image_in_context7;
+        pic[7]=R.id.image_in_context8;
+        pic[8]=R.id.image_in_context9;
+        int length=picUrlsdata.size();
+        if(length!=0){
+            for(int i=0;i<length;i++){
+                //Log.d("allpage","网络参数"+picUrlsdata.get(i).getThumbnail_pic());
+                helper.setImageUrl(pic[i],picUrlsdata.get(i).getThumbnail_pic());
+                //Log.d("allpage",Integer.toString(picUrlsdata.size()));
+            }
+        }else{
+            helper.setWeightVisible(R.id.pic_layout,0);
+        }
 
 
-        //Log.d("allpage","图片链接"+picUrlsdata);
         /*picUrls pu1=picUrlsdata.get(0);
         picUrls pu2=picUrlsdata.get(1);
         picUrls pu3=picUrlsdata.get(2);
         Log.d("allpage","图片链接是"+pu1);
         Log.d("allpage","图片链接是"+pu2);
         Log.d("allpage","图片链接是"+pu3);*/
-        //user us=userdata.get(0);//数组中仅有一项数据
+        helper.setImageUrl(R.id.user_head,us.getProfile_image_url());
         helper.setText(R.id.user_name,us.getName());
         String timetext= UsualUtil.transTime(db.getCreated_at());
         helper.setText(R.id.weilog_context,db.getText());
@@ -119,6 +142,8 @@ public class allpage extends Fragment{
         //Log.d("allpage",db.getSource());
 
     }
+
+
     /*public void getJson(){
         new Thread(){
             public void run(){
@@ -151,30 +176,7 @@ public class allpage extends Fragment{
     };*/
 
 
-    /*public void initdata(){
-        allpagedata=new ArrayList<String>();
-        String one=new String("Leothon");
-        allpagedata.add(one);
-        String two=new String("Leothon");
-        allpagedata.add(two);
-        String three=new String("Leothon");
-        allpagedata.add(three);
-        String four=new String("Leothon");
-        allpagedata.add(four);
-        String five=new String("Leothon");
-        allpagedata.add(five);
-        String six=new String("Leothon");
-        allpagedata.add(six);
-        String seven=new String("Leothon");
-        allpagedata.add(seven);
-        String eight=new String("Leothon");
-        allpagedata.add(eight);
-        String nine=new String("Leothon");
-        allpagedata.add(nine);
-        String ten=new String("Leothon");
-        allpagedata.add(ten);
 
-    }*/
     public void setListener(){
         write_button.setOnClickListener(new View.OnClickListener() {
             @Override
