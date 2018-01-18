@@ -59,19 +59,54 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
 
             //getFile.getfile(jsonArray.toString());
             //Log.d("DownAsynctask",jsonArray.toString());
-            ArrayList<picUrls> pus=new ArrayList<>();
+
             for(int i=0;i<jsonArray.size();i++){//该循环是逐条获取微博信息
+                ArrayList<picUrls> pus=new ArrayList<>();
+                ArrayList<picUrls> repus=new ArrayList<>();//初始化一定要放在里面
                 JsonElement el=jsonArray.get(i);//获取到每一条微博的对象
                 dataBean db=gson.fromJson(el,dataBean.class);
                 JsonObject singleweibojsonobject=el.getAsJsonObject();
                 JsonObject userjsonobject=singleweibojsonobject.getAsJsonObject("user");
                 user us=gson.fromJson(userjsonobject,user.class);//用户信息不是数组所以直接解析加入
                 JsonArray picjsonarray=singleweibojsonobject.getAsJsonArray("pic_urls");
+
+                JsonObject retweeted_statusjsonobject=singleweibojsonobject.getAsJsonObject("retweeted_status");
+                if(retweeted_statusjsonobject!=null){
+                    dataBean redb=gson.fromJson(retweeted_statusjsonobject,dataBean.class);
+                    JsonObject reuserjsonobject=retweeted_statusjsonobject.getAsJsonObject("user");
+                    user reus=gson.fromJson(reuserjsonobject,user.class);
+                    JsonArray repicjsonarray=retweeted_statusjsonobject.getAsJsonArray("pic_urls");
+                    if(repicjsonarray.size()!=0){
+                        for(int k=0;k<repicjsonarray.size();k++){
+                            JsonElement repicjsonelement=repicjsonarray.get(k);
+                            picUrls repu=gson.fromJson(repicjsonelement,picUrls.class);
+                            repus.add(repu);
+                        }
+                    }
+                    redb.setPics_urls(repus);
+                    redb.setUsers(reus);
+                    db.setRetweeted_status(redb);
+                }
+
+                //Log.d("allpage","图片数组的长度"+picjsonarray.size());
+                if(picjsonarray.size()!=0){
+                    for(int j=0;j<picjsonarray.size();j++){//该循环是逐条获取图片链接
+                        JsonElement picjsonelement=picjsonarray.get(j);
+                        picUrls pu=gson.fromJson(picjsonelement,picUrls.class);
+                        //Log.d("allpage","添加数组"+pu.getThumbnail_pic()+j);
+                        pus.add(pu);//获取到每条微博中的图片链接，把他添加到一个数组中
+                    }
+                }else{
+                    pus=null;
+                }
+                /*
                 for(int j=0;j<picjsonarray.size();j++){//该循环是逐条获取图片链接
                     JsonElement picjsonelement=picjsonarray.get(j);
                     picUrls pu=gson.fromJson(picjsonelement,picUrls.class);
+                    //Log.d("allpage","添加数组"+pu.getThumbnail_pic()+j);
                     pus.add(pu);//获取到每条微博中的图片链接，把他添加到一个数组中
-                }
+                }*/
+
                 db.setPics_urls(pus);//把数组添加到统一的databean中便于处理
                 db.setUsers(us);
                 dataBeans.add(db);

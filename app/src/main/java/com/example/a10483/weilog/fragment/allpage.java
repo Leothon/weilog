@@ -100,29 +100,63 @@ public class allpage extends Fragment{
     }
     public void setdata(ViewHolder helper,dataBean db){
         user us=db.getUsers();
-
         ArrayList<picUrls> picUrlsdata=db.getPics_urls();
-        int[] pic=new int[9];
-        pic[0]=R.id.image_in_context1;
-        pic[1]=R.id.image_in_context2;
-        pic[2]=R.id.image_in_context3;
-        pic[3]=R.id.image_in_context4;
-        pic[4]=R.id.image_in_context5;
-        pic[5]=R.id.image_in_context6;
-        pic[6]=R.id.image_in_context7;
-        pic[7]=R.id.image_in_context8;
-        pic[8]=R.id.image_in_context9;
-        int length=picUrlsdata.size();
-        if(length!=0){
-            for(int i=0;i<length;i++){
-                //Log.d("allpage","网络参数"+picUrlsdata.get(i).getThumbnail_pic());
-                helper.setImageUrl(pic[i],picUrlsdata.get(i).getThumbnail_pic());
-                //Log.d("allpage",Integer.toString(picUrlsdata.size()));
+        dataBean redb=db.getRetweeted_status();
+
+        int[] weightId=new int[9];
+        weightId[0]=R.id.image_in_context1;
+        weightId[1]=R.id.image_in_context2;
+        weightId[2]=R.id.image_in_context3;
+        weightId[3]=R.id.image_in_context4;
+        weightId[4]=R.id.image_in_context5;
+        weightId[5]=R.id.image_in_context6;
+        weightId[6]=R.id.image_in_context7;
+        weightId[7]=R.id.image_in_context8;
+        weightId[8]=R.id.image_in_context9;
+
+        int[] reweightId=new int[9];
+        reweightId[0]=R.id.re_image_in_context1;
+        reweightId[1]=R.id.re_image_in_context2;
+        reweightId[2]=R.id.re_image_in_context3;
+        reweightId[3]=R.id.re_image_in_context4;
+        reweightId[4]=R.id.re_image_in_context5;
+        reweightId[5]=R.id.re_image_in_context6;
+        reweightId[6]=R.id.re_image_in_context7;
+        reweightId[7]=R.id.re_image_in_context8;
+        reweightId[8]=R.id.re_image_in_context9;
+
+        if(redb!=null){
+            helper.setWeightVisible(R.id.share_layout,1);
+            user reus=db.getRetweeted_status().getUsers();
+            ArrayList<picUrls> repicUrlsdata=db.getRetweeted_status().getPics_urls();
+            helper.setText(R.id.shareUsername,reus.getName());
+            helper.setText(R.id.share_context,redb.getText());
+            if(repicUrlsdata!=null){
+                setreAllWeightGone(helper);
+                for(int j=0;j<repicUrlsdata.size();j++){
+                    helper.setImageUrl(reweightId[j],repicUrlsdata.get(j).getThumbnail_pic()).setWeightVisible(reweightId[j],1);
+                }
+            }else{
+                setreAllWeightGone(helper);
             }
         }else{
-            helper.setWeightVisible(R.id.pic_layout,0);
+            helper.setWeightVisible(R.id.share_layout,0);
         }
 
+        if(picUrlsdata!=null){
+            setAllWeightGone(helper);
+            for(int i=0;i<picUrlsdata.size();i++){//设置图片的控件显示，否则不显示
+                helper.setImageUrl(weightId[i],picUrlsdata.get(i).getThumbnail_pic()).setWeightVisible(weightId[i],1);
+                //Log.d("allpage",picUrlsdata.get(i).getThumbnail_pic()+" "+i);
+            }
+
+
+        }else{
+            setAllWeightGone(helper);
+            //helper.setWeightVisible(R.id.pic_layout,0);
+            //Log.d("allpage","数据空白");
+        }
+        //Log.d("allpage","pic的 长度是"+picUrlsdata.size());
 
         /*picUrls pu1=picUrlsdata.get(0);
         picUrls pu2=picUrlsdata.get(1);
@@ -140,6 +174,33 @@ public class allpage extends Fragment{
         helper.setText(R.id.weilog_time,timetext);
         helper.setText(R.id.from_device,UsualUtil.parserFrom(db.getSource()));
         //Log.d("allpage",db.getSource());
+
+
+
+    }
+
+    public void setAllWeightGone(ViewHolder helper){
+        helper.setWeightVisible(R.id.image_in_context1,0);
+        helper.setWeightVisible(R.id.image_in_context2,0);
+        helper.setWeightVisible(R.id.image_in_context3,0);
+        helper.setWeightVisible(R.id.image_in_context4,0);
+        helper.setWeightVisible(R.id.image_in_context5,0);
+        helper.setWeightVisible(R.id.image_in_context6,0);
+        helper.setWeightVisible(R.id.image_in_context7,0);
+        helper.setWeightVisible(R.id.image_in_context8,0);
+        helper.setWeightVisible(R.id.image_in_context9,0);
+
+    }
+    public void setreAllWeightGone(ViewHolder helper){
+        helper.setWeightVisible(R.id.re_image_in_context1,0);
+        helper.setWeightVisible(R.id.re_image_in_context2,0);
+        helper.setWeightVisible(R.id.re_image_in_context3,0);
+        helper.setWeightVisible(R.id.re_image_in_context4,0);
+        helper.setWeightVisible(R.id.re_image_in_context5,0);
+        helper.setWeightVisible(R.id.re_image_in_context6,0);
+        helper.setWeightVisible(R.id.re_image_in_context7,0);
+        helper.setWeightVisible(R.id.re_image_in_context8,0);
+        helper.setWeightVisible(R.id.re_image_in_context9,0);
 
     }
 

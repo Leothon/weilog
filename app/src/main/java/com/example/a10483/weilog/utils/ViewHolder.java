@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.a10483.weilog.R;
+
 
 /**
  * Created by 10483 on 2017/6/5.
@@ -66,7 +68,12 @@ public class ViewHolder {
 
     public ViewHolder setCount(int viewId,int count){
         TextView textcount=getView(viewId);
-        textcount.setText(""+count);//单纯用count做参数，setText会把count当作ResourceId使用导致没有找到错误
+        if(count>10000){
+            textcount.setText(""+count/10000+"万");
+        }else{
+            textcount.setText(""+count);
+        }
+        //单纯用count做参数，setText会把count当作ResourceId使用导致没有找到错误
         return this;
     }
 
@@ -99,14 +106,29 @@ public class ViewHolder {
     }*/
     public ViewHolder setImageUrl(int viewId, String url){
         final ImageView view=getView(viewId);
+        view.setTag(url);
+        view.setImageResource(R.drawable.ic_launcher);
+
         AsyncImageLoader asyncImageLoader=new AsyncImageLoader();
-        asyncImageLoader.loadDrawable(url, new AsyncImageLoader.ImageCallback() {
-            @Override
-            public void imageLoaded(Drawable imageDrawable) {
-                //ImageView view=getView(viewId);
-                view.setImageDrawable(imageDrawable);
+
+
+        if(view.getTag()!=null&&view.getTag().equals(url)){
+            Drawable cacheImage=asyncImageLoader.loadDrawable(url, new AsyncImageLoader.ImageCallback() {
+                @Override
+                public void imageLoaded(Drawable imageDrawable) {
+                    view.setImageDrawable(imageDrawable);
+                }
+            });
+
+            if(cacheImage!=null){
+                view.setImageDrawable(cacheImage);
             }
-        });
+
+        }
+
+        /*if(cacheImage!=null){
+            view.setImageDrawable(cacheImage);
+        }*/
         return this;
     }
 

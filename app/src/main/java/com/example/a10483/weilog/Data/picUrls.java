@@ -8,9 +8,8 @@ import java.util.ArrayList;
 
 public class picUrls {
 
-    private String  thumbnail_pic;
-
-    public String  getThumbnail_pic(){
+    private String thumbnail_pic;
+    public String getThumbnail_pic(){
         return thumbnail_pic;
     }
 

@@ -17,6 +17,9 @@ public class dataBean {
     private user users;
     private String source;
     private ArrayList<picUrls> pics_urls;
+
+    private dataBean retweeted_status;
+
      /*public dataBean(String created_at, String text,
                       String attitudes_count, String comments_count, String reposts_count) {
         this.created_at = created_at;
@@ -26,6 +29,12 @@ public class dataBean {
         this.reposts_count = reposts_count;
     }*/
 
+    public dataBean getRetweeted_status(){
+        return retweeted_status;
+    }
+    public void setRetweeted_status(dataBean retweeted_status){
+        this.retweeted_status=retweeted_status;
+    }
     public ArrayList<picUrls> getPics_urls(){
         return pics_urls;
     }
