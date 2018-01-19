@@ -2,6 +2,7 @@ package com.example.a10483.weilog.utils;
 
 import android.os.Environment;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;

@@ -94,7 +94,7 @@ public class allpage extends Fragment{
 
         es= Executors.newFixedThreadPool(1);
         new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token);
-        allpage_listview.setDividerHeight(1);
+        allpage_listview.setDividerHeight(3);
         setListener();
         return view;
     }
@@ -129,7 +129,7 @@ public class allpage extends Fragment{
             helper.setWeightVisible(R.id.share_layout,1);
             user reus=db.getRetweeted_status().getUsers();
             ArrayList<picUrls> repicUrlsdata=db.getRetweeted_status().getPics_urls();
-            helper.setText(R.id.shareUsername,reus.getName());
+            helper.setText(R.id.shareUsername,"@"+reus.getName());
             helper.setText(R.id.share_context,redb.getText());
             if(repicUrlsdata!=null){
                 setreAllWeightGone(helper);

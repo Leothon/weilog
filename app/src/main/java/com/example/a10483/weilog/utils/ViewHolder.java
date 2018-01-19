@@ -3,6 +3,7 @@ package com.example.a10483.weilog.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public class ViewHolder {
     private SparseArray<View> mViews;
     private int mPosition;
     private View mConvertView;
+    private Context context;
 
     public View getConvertView(){
         return mConvertView;
@@ -32,6 +34,7 @@ public class ViewHolder {
         this.mPosition=position;
         this.mConvertView= LayoutInflater.from(context).inflate(layoutId,parent,false);
         this.mConvertView.setTag(this);
+        this.context=context;
     }
 
     public static ViewHolder get(Context context,View convertView,ViewGroup parent,int layoutId,int postion){
@@ -60,7 +63,8 @@ public class ViewHolder {
     public  ViewHolder setText(int viewId, String text)
     {
         TextView tv = getView(viewId);
-        tv.setText(text);
+        SpannableString spannableString=textviewemojiorhtmltrans.getEmotionContent(context,tv,text);
+        tv.setText(spannableString);
         tv.setAutoLinkMask(Linkify.WEB_URLS);
 
         return this;

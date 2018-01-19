@@ -2,6 +2,7 @@ package com.example.a10483.weilog;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
@@ -28,6 +29,7 @@ import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -56,6 +58,7 @@ public class MainActivity extends BaseActivity
 
 
 
+
     @Override
     public boolean releaseInstance() {
         return super.releaseInstance();
@@ -67,6 +70,7 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         accessToken=AccessTokenKeeper.readAccessToken(this);
         //getJson();
+        //getEmotion();
 
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);

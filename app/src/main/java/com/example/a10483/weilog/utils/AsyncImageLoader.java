@@ -1,10 +1,14 @@
 package com.example.a10483.weilog.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 
+import java.io.InputStream;
 import java.lang.ref.SoftReference;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +17,7 @@ import java.util.concurrent.Executors;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.logging.LogRecord;
 
@@ -98,6 +103,8 @@ public class AsyncImageLoader {
             throw new RuntimeException(e);
         }
     }
+
+
     public interface ImageCallback{
         public void imageLoaded(Drawable imageDrawable);
     }

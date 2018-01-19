@@ -127,9 +127,9 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
     }
 
 
-    public static void updateUI(ViewHolder helper){
+   /* public static void updateUI(ViewHolder helper){
         helper.setText(R.id.user_name,"Context");
         helper.setText(R.id.weilog_context,"dauobfaubfoaibfoahfoalibfnia");
         //for(int i=0;i<)
-    }
+    }*/
 }

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/user_head"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:src="@drawable/usericon"
         android:layout_marginLeft="3dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"/>-->
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/user_head"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/usericon"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
+        app:riv_oval="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -160,7 +169,7 @@
             android:id="@+id/share_layout"
             android:orientation="vertical"
             android:layout_marginTop="3dp"
-            android:background="@color/backgrey"
+            android:background="@color/scigray"
             android:visibility="gone">
 
             <LinearLayout
