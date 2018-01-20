@@ -1,9 +1,11 @@
 package com.example.a10483.weilog.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
 import com.example.a10483.weilog.utils.ViewHolder;
@@ -11,22 +13,29 @@ import com.example.a10483.weilog.utils.ViewHolder;
 import java.util.ArrayList;
 
 //通用的Adapter，使用时只需要引用内部类即可调用，参数为上下文，数据List，Item的Id。
-public abstract class WeilogAdapter<T> extends BaseAdapter {
+public abstract class WeilogAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
 
     protected LayoutInflater inflater;
     protected Context mContext;
     protected ArrayList<T> weilogdatas;
-    protected final int mItemLayoutId;
+    protected  int mItemLayoutId;
     private int position;
+    private MultiTypeSupport multiTypeSupport;
+    public AdapterView.OnItemClickListener mItemClickListener;
+    public View.OnLongClickListener mLongClickListener;
     public WeilogAdapter(Context context, ArrayList<T> weilogdata ,int ItemLayoutId){
-        inflater= LayoutInflater.from(context);
+        this.inflater= LayoutInflater.from(context);
         this.mContext=context;
-        weilogdatas=weilogdata;
+        this.weilogdatas=weilogdata;
         this.mItemLayoutId=ItemLayoutId;
 
     }
+    public WeilogAdapter(Context context,ArrayList<T> weilogdatas,MultiTypeSupport<T> multiTypeSupport) {
+        this(context, weilogdatas, -1);
+        this.multiTypeSupport = multiTypeSupport;
+    }
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return weilogdatas.size();
 
     }
@@ -34,6 +43,16 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
         return weilogdatas;
     }
 
+
+
+
+    public void setOnItemClickListener(AdapterView.OnItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
+    }
+
+    public void setOnLongClickListener(View.OnLongClickListener longClickListener) {
+        this.mLongClickListener = longClickListener;
+    }
 
     /*@Override
     public View getView(int position, View contertView, ViewGroup parent) {
@@ -83,35 +102,74 @@ public abstract class WeilogAdapter<T> extends BaseAdapter {
         public TextView like_button;
     }*/
 
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if(multiTypeSupport!=null){//多布局支持
+            return multiTypeSupport.getLayoutId(weilogdatas.get(position),position);
+        }
+        return super.getItemViewType(position);
+    }
+
+   /* @Override
+    public T getItem(int position) {
+        this.position = position;
+        return weilogdatas.get(position);
+    }*/
+    /*@Override
+    public long getItemId(int position) {
+        this.position=position;
+        return position;
+    }*/
     public int getPosition(){
         return position;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
-
-    @Override
-    public T getItem(int position) {
-        this.position = position;
-        return weilogdatas.get(position);
-    }
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
+    /*@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder=getViewHolder(position,convertView,parent);
         convert(viewHolder,getItem(position));
         return viewHolder.getConvertView();
-    }
+    }*/
 
     public abstract void convert(ViewHolder helper,T item);
 
-    private ViewHolder getViewHolder(int position,View convertView,ViewGroup parent){
+    /*private ViewHolder getViewHolder(int position,View convertView,ViewGroup parent){
         return ViewHolder.get(mContext,convertView,parent,mItemLayoutId,position);
+    }*/
+
+    public ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
+        if (multiTypeSupport != null) {
+            mItemLayoutId = viewType;
+        }
+        //View itemView = inflater.inflate(mItemLayoutId, parent, false);
+        //ViewHolder holder = new ViewHolder(itemView);
+        ViewHolder viewholder=ViewHolder.get(mContext,parent,mItemLayoutId,position);
+
+        return viewholder;
+
+    }
+
+    public void onBindViewHolder(ViewHolder holder,final int position) {
+        /*if (mItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemClickListener.onItemClick(position);
+                }
+            });
+        }
+        if (mLongClickListener != null) {
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return mLongClickListener.onLongClick(position);
+                }
+            });
+        }*/
+
+        this.position=position;
+        convert(holder, weilogdatas.get(position));
     }
 }

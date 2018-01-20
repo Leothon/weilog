@@ -17,6 +17,8 @@ public class dataBean {
     private user users;
     private String source;
     private ArrayList<picUrls> pics_urls;
+    private String id;
+
 
     private dataBean retweeted_status;
 
@@ -28,6 +30,15 @@ public class dataBean {
         this.comments_count = comments_count;
         this.reposts_count = reposts_count;
     }*/
+
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id=id;
+    }
 
     public dataBean getRetweeted_status(){
         return retweeted_status;

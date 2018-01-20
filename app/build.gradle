@@ -36,6 +36,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.makeramen:roundedimageview:2.2.1'
+    compile 'com.android.support:recyclerview-v7:25.0.+'
     testCompile 'junit:junit:4.12'
 }
 repositories {

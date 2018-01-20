@@ -7,17 +7,23 @@
     tools:context="com.example.a10483.weilog.fragment.allpage">
 
 
-
-    <ListView
-        android:id="@+id/allpage_listview"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:dividerHeight="2dp"
-        android:divider="@color/backgrey">
+        android:layout_height="wrap_content"
+        android:id="@+id/refreshlayout">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/allpage_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:dividerHeight="2dp"
+            android:divider="@color/backgrey">
 
-    </ListView>
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
     <!--<com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"

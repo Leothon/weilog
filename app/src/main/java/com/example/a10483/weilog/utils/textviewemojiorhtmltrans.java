@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
+
+import com.example.a10483.weilog.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,11 +20,11 @@ import java.util.regex.Pattern;
  */
 
 public class textviewemojiorhtmltrans {
-    public static SpannableString getEmotionContent(final Context context, final TextView tv,String resource){
+    public static SpannableString getEmotionContent(final Context context,String resource){
         SpannableString spannableString=new SpannableString(resource);
         Resources res=context.getResources();
 
-        String regexEmotion="\\[([\u4e00-\u9fa5\\w])+\\]";
+        String regexEmotion="\\[[^\\[\\]]*\\]";
 
         Pattern patternEmotion=Pattern.compile(regexEmotion);
         Matcher matcherEmotion=patternEmotion.matcher(spannableString);
@@ -30,12 +33,12 @@ public class textviewemojiorhtmltrans {
             String key=matcherEmotion.group();
             int start=matcherEmotion.start();
             //Integer imgRes=EmotionUtils.getImgByName(key);
-            Bitmap bitmap=new EmotionUtils(context).getImgByName(key);
-            if(bitmap!=null){
-                int size=(int)tv.getTextSize();
+            Drawable drawable=EmotionUtils.getImgByName(key);
+            if(drawable!=null){
+                //int size=(int)tv.getTextSize();
                 //Bitmap bitmap= BitmapFactory.decodeResource(res,imgRes);
-                Bitmap scaleBitmap=Bitmap.createScaledBitmap(bitmap,size,size,true);
-                ImageSpan span=new ImageSpan(context,scaleBitmap);
+                //Bitmap scaleBitmap=Bitmap.createScaledBitmap(bitmap,size,size,true);
+                ImageSpan span=new ImageSpan(drawable);
                 spannableString.setSpan(span,start,start+key.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }

@@ -28,11 +28,11 @@ import java.util.List;
 
 public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
     //ArrayList<statusBean> data;
-    ArrayList<dataBean> dataBeans;
+    ArrayList<statusBean> dataBeans;
     WeilogAdapter adapter;
     Context context;
 
-    public DownAsynctask(ArrayList<dataBean> data, WeilogAdapter adapter, Context context){
+    public DownAsynctask(ArrayList<statusBean> data, WeilogAdapter adapter, Context context){
         super();
         this.dataBeans=data;
         this.adapter=adapter;
@@ -59,11 +59,13 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
 
             //getFile.getfile(jsonArray.toString());
             //Log.d("DownAsynctask",jsonArray.toString());
-
+            ArrayList<dataBean> dataBeanArrayList=new ArrayList<>();
             for(int i=0;i<jsonArray.size();i++){//该循环是逐条获取微博信息
+
                 ArrayList<picUrls> pus=new ArrayList<>();
                 ArrayList<picUrls> repus=new ArrayList<>();//初始化一定要放在里面
                 JsonElement el=jsonArray.get(i);//获取到每一条微博的对象
+
                 dataBean db=gson.fromJson(el,dataBean.class);
                 JsonObject singleweibojsonobject=el.getAsJsonObject();
                 JsonObject userjsonobject=singleweibojsonobject.getAsJsonObject("user");
@@ -109,8 +111,14 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
 
                 db.setPics_urls(pus);//把数组添加到统一的databean中便于处理
                 db.setUsers(us);
-                dataBeans.add(db);
+                dataBeanArrayList.add(db);
+                sb.setDataBeans(dataBeanArrayList);
+
             }
+
+            sb.setSince_id(dataBeanArrayList.get(0).getId());
+            sb.setMax_id(dataBeanArrayList.get(dataBeanArrayList.size()-1).getId());
+            dataBeans.add(sb);
             adapter.notifyDataSetChanged();
 
             /*if(sb.data==null){

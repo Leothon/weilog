@@ -11,6 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.widget.ListView;
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
 import com.example.a10483.weilog.Data.dataBean;
 import com.example.a10483.weilog.Data.picUrls;
+import com.example.a10483.weilog.Data.statusBean;
 import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.AsyncImageLoader;
@@ -48,13 +52,16 @@ public class allpage extends Fragment{
     private Toolbar allpage_toolbar;
     private ImageView open_nav1;
     private ImageView search;
-    private ListView allpage_listview;
+    private RecyclerView allpage_recyclerview;
     private FloatingActionButton cameraButton;
     private FloatingActionButton write_button;
-    private ArrayList<dataBean> allpagedata;
+    private ArrayList<statusBean> allpagedata;
     private WeilogAdapter mAdapter;
     private Oauth2AccessToken accessToken;
     private ExecutorService es;
+    private LinearLayoutManager linearLayoutManager;
+    private String sinceid;
+    private String max_id;
 
     private final static String get_timeline_url="https://api.weibo.com/2/statuses/home_timeline.json";
     public allpage() {
@@ -72,29 +79,45 @@ public class allpage extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_allpage,container,false);
-        allpage_listview=(ListView)view.findViewById(R.id.allpage_listview);
-        allpage_listview.setVerticalScrollBarEnabled(false);
+        allpage_recyclerview=(RecyclerView)view.findViewById(R.id.allpage_recyclerview);
+        allpage_recyclerview.setVerticalScrollBarEnabled(false);
+        linearLayoutManager=new LinearLayoutManager(getContext());
+        allpage_recyclerview.setLayoutManager(linearLayoutManager);
+        final SwipeRefreshLayout swipeRefreshLayout=(SwipeRefreshLayout)view.findViewById(R.id.refreshlayout);
         //cameraButton=(FloatingActionButton)view.findViewById(R.id.camera_button);
         write_button=(FloatingActionButton)view.findViewById(R.id.write);
         //WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         //allpage_listview.setAdapter(adapter);
         accessToken=AccessTokenKeeper.readAccessToken(getContext());
-        String token= accessToken.getToken().toString();
+        final String token= accessToken.getToken().toString();
         allpagedata=new ArrayList<>();//记得初始化，否则数据无法绑定
-        allpage_listview.setAdapter(mAdapter=new WeilogAdapter(getActivity(),allpagedata,R.layout.weilogitem) {
+        es= Executors.newFixedThreadPool(1);
+        allpage_recyclerview.setAdapter(mAdapter=new WeilogAdapter(getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
-                    public void convert(ViewHolder helper, Object item) {
+                    public void convert(ViewHolder helper,Object item) {
                         allpagedata=this.getDatas();
-                        dataBean db=allpagedata.get(getPosition());
+                        statusBean sb=allpagedata.get(0);
+                        ArrayList<dataBean> dblist=sb.getDataBeans();
+                        dataBean db=dblist.get(getPosition());
                         setdata(helper,db);
+                        sinceid=sb.getSince_id();
+                        max_id=sb.getMax_id();
                     }
                 }
 
                     );
 
-        es= Executors.newFixedThreadPool(1);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"?since_id="+sinceid);
+                //mAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token);
-        allpage_listview.setDividerHeight(3);
+        //allpage_listview.setDividerHeight(3);
         setListener();
         return view;
     }

@@ -3,8 +3,10 @@ package com.example.a10483.weilog.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,52 +21,72 @@ import com.example.a10483.weilog.R;
  * Created by 10483 on 2017/6/5.
  */
 //抽象出来的ViewHolder
-public class ViewHolder {
+public class ViewHolder extends RecyclerView.ViewHolder{
     private SparseArray<View> mViews;
     private int mPosition;
     private View mConvertView;
     private Context context;
 
-    public View getConvertView(){
-        return mConvertView;
-    }
 
-    public ViewHolder(Context context, ViewGroup parent,int layoutId,int position){
+    /*public View getConvertView(){
+        return mConvertView;
+    }*/
+
+    public ViewHolder(Context context,View itemView,ViewGroup parent,int position){
+        super(itemView);
+        this.context=context;
+        this.mConvertView=itemView;
+        this.mPosition=position;
+        mViews=new SparseArray<>();
+    }
+    /*public ViewHolder(Context context, ViewGroup parent,int layoutId,int position){
         this.mViews=new SparseArray<View>();
         this.mPosition=position;
         this.mConvertView= LayoutInflater.from(context).inflate(layoutId,parent,false);
         this.mConvertView.setTag(this);
         this.context=context;
-    }
+    }*/
 
-    public static ViewHolder get(Context context,View convertView,ViewGroup parent,int layoutId,int postion){
-        if (convertView==null){
+    public static ViewHolder get(Context context,ViewGroup parent,int layoutId,int postion){
+        /*if (convertView==null){
             return new ViewHolder(context,parent,layoutId,postion);
         }else{
             ViewHolder holder=(ViewHolder)convertView.getTag();
             holder.mPosition=postion;
             return holder;
-        }
+        }*/
+        View itemView=LayoutInflater.from(context).inflate(layoutId,parent,false);
+        ViewHolder holder=new ViewHolder(context,itemView,parent,postion);
+        return holder;
     }
 
     public <T extends View>T getView(int viewId){
         View view=mViews.get(viewId);
         if (view==null){
-            view=mConvertView.findViewById(viewId);
+            view=itemView.findViewById(viewId);
             mViews.put(viewId,view);
         }
         return (T) view;
     }
 
-    public View getmConvertView(){
+    /*public View getmConvertView(){
         return mConvertView;
+    }*/
+
+    public void setOnItemClickListener(View.OnClickListener listener){
+        itemView.setOnClickListener(listener);
+    }
+    public void setOnItemLongClickListener(View.OnLongClickListener listener){
+        itemView.setOnLongClickListener(listener);
     }
     //设置文字的通用方法
     public  ViewHolder setText(int viewId, String text)
     {
         TextView tv = getView(viewId);
-        SpannableString spannableString=textviewemojiorhtmltrans.getEmotionContent(context,tv,text);
-        tv.setText(spannableString);
+        /*SpannableString spannableString=textviewemojiorhtmltrans.getEmotionContent(context,text);
+        Log.d("ViewHolder","数据是"+spannableString);
+        tv.setText(spannableString);*/
+        tv.setText(text);
         tv.setAutoLinkMask(Linkify.WEB_URLS);
 
         return this;
@@ -101,13 +123,7 @@ public class ViewHolder {
         return this;
 
     }
-    //设置网络图片的通用方法
-    /*public ViewHolder setImageBitmap(int viewId, Bitmap bm)
-    {
-        ImageView view = getView(viewId);
-        view.setImageBitmap(bm);
-        return this;
-    }*/
+
     public ViewHolder setImageUrl(int viewId, String url){
         final ImageView view=getView(viewId);
         view.setTag(url);

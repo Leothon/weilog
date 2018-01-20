@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
@@ -56,7 +58,7 @@ public class Activityaboutme extends BaseActivity {
     private LinearLayout followclick;
     private LinearLayout fansclick;
     private WeilogAdapter mAdapter;
-    private ArrayList<dataBean> aboutmedata;
+    private ArrayList<statusBean> aboutmedata;
     private Oauth2AccessToken AccessToken;
     private String uid;
     private ExecutorService es;
@@ -79,18 +81,22 @@ public class Activityaboutme extends BaseActivity {
         back_me=(ImageView)findViewById(R.id.back_in_me);
         info_me=(TextView)findViewById(R.id.infoaboutme);
         searchmylog=(ImageView)findViewById(R.id.searchmylog);
-        final ListView aboutme_listview=(ListView)findViewById(R.id.aboutme_listview);
+        final RecyclerView aboutme_recyclerview=(RecyclerView) findViewById(R.id.aboutme_recyclerview);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        aboutme_recyclerview.setLayoutManager(linearLayoutManager);
         aboutmedata=new ArrayList<>();
         final View headitem=View.inflate(this,R.layout.aboutmeheaditem,null);
         //WeilogAdapter adapter=new WeilogAdapter(this,minedata);
         //initdata();
-        aboutme_listview.addHeaderView(headitem);
+        //aboutme_recyclerview.addHeaderView(headitem);
 
-        aboutme_listview.setAdapter(mAdapter=new WeilogAdapter(getApplicationContext(),aboutmedata,R.layout.weilogitem) {
+        aboutme_recyclerview.setAdapter(mAdapter=new WeilogAdapter(getApplicationContext(),aboutmedata,R.layout.weilogitem) {
             @Override
             public void convert(ViewHolder helper, Object item) {
                 aboutmedata=this.getDatas();
-                dataBean db=aboutmedata.get(getPosition());
+                statusBean sb=aboutmedata.get(0);
+                ArrayList<dataBean> dblist=sb.getDataBeans();
+                dataBean db=dblist.get(getPosition());
                 setData(helper,db);
 
             }

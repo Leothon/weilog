@@ -2,6 +2,7 @@ package com.example.a10483.weilog;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -20,16 +21,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a10483.weilog.Data.emotionbean;
 import com.example.a10483.weilog.fragment.allpage;
 import com.example.a10483.weilog.fragment.explorepage;
 import com.example.a10483.weilog.fragment.noticepage;
+import com.example.a10483.weilog.utils.AsyncImageLoader;
 import com.example.a10483.weilog.utils.DataCleanManager;
 import com.example.a10483.weilog.utils.GetJson;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -55,6 +62,7 @@ public class MainActivity extends BaseActivity
 
     private Oauth2AccessToken accessToken;
     private final static String get_uid_url="https://api.weibo.com/2/account/get_uid.json";
+    private final static String get_emotion_url="https://api.weibo.com/2/emotions.json";
 
 
 
@@ -85,6 +93,8 @@ public class MainActivity extends BaseActivity
                 this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         //getActionBar().setDisplayHomeAsUpEnabled(true);
+        String token=accessToken.getToken().toString();
+        //new emotionAsynctask().execute(get_emotion_url+"?access_token="+token);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         open_nav=(ImageView)findViewById(R.id.open_nav);
@@ -112,6 +122,60 @@ public class MainActivity extends BaseActivity
 
 
     }
+
+    /*private Map<String,Drawable> emotion=new HashMap<>();
+
+    class emotionAsynctask extends AsyncTask<String,Void,byte[]> {
+
+
+        @Override
+        protected byte[] doInBackground(String... strings) {
+
+            return GetJson.getjson(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(byte[] bytes) {
+            super.onPostExecute(bytes);
+            if(bytes!=null){
+
+                String jsonString=new String(bytes);
+                try{
+                    JSONArray emotionarray=new JSONArray(jsonString);
+
+                    if(emotionarray.length()!=0){
+                        for(int i=0;i<emotionarray.length();i++){
+                            //JsonElement jsonElement=emotionarray.get(i);
+                            //final emotionbean eb=gson.fromJson(jsonElement,emotionbean.class);
+                            final emotionbean eb=new emotionbean();
+                            JSONObject jsonObject=emotionarray.getJSONObject(i);
+                            String phrase=jsonObject.getString("phrase");
+                            String url=jsonObject.getString("url");
+                            eb.setPhrase(phrase);
+                            eb.setUrl(url);
+                            AsyncImageLoader asyncImageLoader=new AsyncImageLoader();
+                            asyncImageLoader.loadDrawable(eb.getUrl(), new AsyncImageLoader.ImageCallback() {
+                                @Override
+                                public void imageLoaded(Drawable imageDrawable) {
+                                    //Resources res=context.getResources();
+                                    //BitmapDrawable bitmapDrawable=(BitmapDrawable)imageDrawable;
+                                    //Bitmap bitmap=bitmapDrawable.getBitmap();
+                                    emotion.put(eb.getPhrase(),imageDrawable);
+                                }
+                            });
+                        }
+
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+
+            }
+
+        }
+    }*/
 
 
     //用accesstoken获取UID并存入SharePreferences中
