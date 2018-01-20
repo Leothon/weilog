@@ -31,6 +31,7 @@ import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.R;
 import com.example.a10483.weilog.utils.AsyncImageLoader;
 import com.example.a10483.weilog.utils.DownAsynctask;
+import com.example.a10483.weilog.utils.EndScorllListener;
 import com.example.a10483.weilog.utils.GetJson;
 import com.example.a10483.weilog.utils.UsualUtil;
 import com.example.a10483.weilog.utils.ViewHolder;
@@ -55,7 +56,8 @@ public class allpage extends Fragment{
     private RecyclerView allpage_recyclerview;
     private FloatingActionButton cameraButton;
     private FloatingActionButton write_button;
-    private ArrayList<statusBean> allpagedata;
+    private ArrayList<dataBean> allpagedata;
+    //private statusBean allpagedata;
     private WeilogAdapter mAdapter;
     private Oauth2AccessToken accessToken;
     private ExecutorService es;
@@ -96,28 +98,41 @@ public class allpage extends Fragment{
                     @Override
                     public void convert(ViewHolder helper,Object item) {
                         allpagedata=this.getDatas();
-                        statusBean sb=allpagedata.get(0);
-                        ArrayList<dataBean> dblist=sb.getDataBeans();
-                        dataBean db=dblist.get(getPosition());
+                        dataBean db=allpagedata.get(getPosition());
                         setdata(helper,db);
-                        sinceid=sb.getSince_id();
-                        max_id=sb.getMax_id();
+
+                        if(getPosition()==0){
+                            sinceid=db.getId();
+                        }
+                        if(getPosition()==allpagedata.size()-1){
+                            max_id=db.getId();
+                        }
+                        //Log.d("allpage","起始ID "+sinceid+" "+"终止ID "+max_id);
                     }
                 }
 
                     );
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"?since_id="+sinceid);
+                new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"&since_id="+sinceid);
                 //mAdapter.notifyDataSetChanged();
+
                 swipeRefreshLayout.setRefreshing(false);
             }
-        });
+        });*/
 
+        allpage_recyclerview.addOnScrollListener(new EndScorllListener(linearLayoutManager) {
+            @Override
+            public void onLoadMoredata(int currentPage) {
+                new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"&max_id="+max_id);
+
+            }
+        });
         new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token);
         //allpage_listview.setDividerHeight(3);
+        //Log.d("allpage","token的值是"+token);
         setListener();
         return view;
     }

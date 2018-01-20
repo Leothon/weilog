@@ -58,7 +58,7 @@ public class Activityaboutme extends BaseActivity {
     private LinearLayout followclick;
     private LinearLayout fansclick;
     private WeilogAdapter mAdapter;
-    private ArrayList<statusBean> aboutmedata;
+    private ArrayList<dataBean> aboutmedata;
     private Oauth2AccessToken AccessToken;
     private String uid;
     private ExecutorService es;
@@ -94,10 +94,13 @@ public class Activityaboutme extends BaseActivity {
             @Override
             public void convert(ViewHolder helper, Object item) {
                 aboutmedata=this.getDatas();
-                statusBean sb=aboutmedata.get(0);
-                ArrayList<dataBean> dblist=sb.getDataBeans();
-                dataBean db=dblist.get(getPosition());
+                //statusBean sb=aboutmedata.get(0);
+                //ArrayList<dataBean> dblist=sb.getDataBeans();
+                dataBean db=aboutmedata.get(getPosition());
                 setData(helper,db);
+                if(getPosition()==0){
+
+                }
 
             }
         });

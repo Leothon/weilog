@@ -28,12 +28,14 @@ import java.util.List;
 
 public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
     //ArrayList<statusBean> data;
-    ArrayList<statusBean> dataBeans;
+    //statusBean statusBean;
+    ArrayList<dataBean> dataBeans;
     WeilogAdapter adapter;
     Context context;
 
-    public DownAsynctask(ArrayList<statusBean> data, WeilogAdapter adapter, Context context){
+    public DownAsynctask(ArrayList<dataBean> data, WeilogAdapter adapter, Context context){
         super();
+        //this.statusBean=data;
         this.dataBeans=data;
         this.adapter=adapter;
         this.context=context;
@@ -59,7 +61,6 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
 
             //getFile.getfile(jsonArray.toString());
             //Log.d("DownAsynctask",jsonArray.toString());
-            ArrayList<dataBean> dataBeanArrayList=new ArrayList<>();
             for(int i=0;i<jsonArray.size();i++){//该循环是逐条获取微博信息
 
                 ArrayList<picUrls> pus=new ArrayList<>();
@@ -111,14 +112,13 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
 
                 db.setPics_urls(pus);//把数组添加到统一的databean中便于处理
                 db.setUsers(us);
-                dataBeanArrayList.add(db);
-                sb.setDataBeans(dataBeanArrayList);
-
+                dataBeans.add(db);
             }
 
-            sb.setSince_id(dataBeanArrayList.get(0).getId());
-            sb.setMax_id(dataBeanArrayList.get(dataBeanArrayList.size()-1).getId());
-            dataBeans.add(sb);
+
+
+            //statusBean.setSince_id(dataBeanArrayList.get(0).getId());
+            //statusBean.setMax_id(dataBeanArrayList.get(dataBeanArrayList.size()-1).getId());
             adapter.notifyDataSetChanged();
 
             /*if(sb.data==null){

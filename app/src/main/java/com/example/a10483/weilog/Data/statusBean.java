@@ -10,7 +10,7 @@ public class statusBean {
 
     private ArrayList<dataBean> dataBeans;
 
-    private String since_id;
+    /*private String since_id;
     private String max_id;
     public String getSince_id(){
         return since_id;
@@ -25,7 +25,7 @@ public class statusBean {
     }
     public void setMax_id(String max_id){
         this.max_id=max_id;
-    }
+    }*/
     public void setDataBeans(ArrayList<dataBean> dataBeans){
         this.dataBeans=dataBeans;
     }
