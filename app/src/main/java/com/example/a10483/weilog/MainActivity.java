@@ -21,13 +21,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.a10483.weilog.Data.emotionbean;
+import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.fragment.allpage;
 import com.example.a10483.weilog.fragment.explorepage;
 import com.example.a10483.weilog.fragment.noticepage;
 import com.example.a10483.weilog.utils.AsyncImageLoader;
 import com.example.a10483.weilog.utils.DataCleanManager;
 import com.example.a10483.weilog.utils.GetJson;
+import com.example.a10483.weilog.utils.GetRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
@@ -35,6 +44,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,13 +67,14 @@ public class MainActivity extends BaseActivity
     private ImageView open_nav;
     private TextView titlename;
     private ImageView search;
-    private ImageView nav_usericon;
+    private RoundedImageView nav_usericon;
     private TextView nav_username;
 
     private Oauth2AccessToken accessToken;
-    private final static String get_uid_url="https://api.weibo.com/2/account/get_uid.json";
     private final static String get_emotion_url="https://api.weibo.com/2/emotions.json";
 
+    private static final String user_show_url="https://api.weibo.com/2/users/show.json";
+    private String token;
 
 
 
@@ -77,13 +88,13 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         accessToken=AccessTokenKeeper.readAccessToken(this);
-        //getJson();
+
         //getEmotion();
 
         allPage=(ImageView)findViewById(R.id.allPage);
         explorePage=(ImageView)findViewById(R.id.explorePage);
         noticePage=(ImageView)findViewById(R.id.noticePage);
-        nav_usericon=(ImageView)findViewById(R.id.nav_usericon);
+        nav_usericon=(RoundedImageView)findViewById(R.id.nav_usericon);
         nav_username=(TextView)findViewById(R.id.nav_username);
         switchFragment(ALLPAGE);
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -93,7 +104,7 @@ public class MainActivity extends BaseActivity
                 this, drawer, null, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         //getActionBar().setDisplayHomeAsUpEnabled(true);
-        String token=accessToken.getToken().toString();
+        token=accessToken.getToken().toString();
         //new emotionAsynctask().execute(get_emotion_url+"?access_token="+token);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
@@ -103,6 +114,9 @@ public class MainActivity extends BaseActivity
         open_nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 drawer.openDrawer(GravityCompat.START);
             }
         });
@@ -117,11 +131,55 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        /*SharedPreferences sharedPreferences=getSharedPreferences("uiddata",MODE_PRIVATE);
+
+
+        String uid=sharedPreferences.getString("uid","");
+        //Log.d("String",uid+"   "+token);
+        RequestQueue queue= MyApplication.requestQueue;
+        JsonObjectRequest getuserinforequest=new JsonObjectRequest(user_show_url+"?access_token="+token+"&uid="+uid,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try{
+                    String profile_image_url=jsonObject.getString("profile_image_url");
+                    String username=jsonObject.getString("screen_name");
+                    Log.d("MainActivity",profile_image_url+"  "+username);
+                    //AsyncImageLoader asyncImageLoader=new AsyncImageLoader();
+                    /*Drawable cacheImage=asyncImageLoader.loadDrawable(profile_image_url, new AsyncImageLoader.ImageCallback() {
+                        @Override
+                        public void imageLoaded(Drawable imageDrawable) {
+                            nav_usericon.setImageDrawable(imageDrawable);
+                        }
+                    });
+
+                    if(cacheImage!=null){
+                        nav_usericon.setImageDrawable(cacheImage);
+                    }*/
+                    //Drawable drawable=Drawable.createFromStream(new URL(profile_image_url).openStream(),null);
+                    /*nav_usericon.setImageResource(R.drawable.usericon);
+                    nav_username.setText(username);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.print("Error");
+            }
+        });
+
+        queue.add(getuserinforequest);*/
         setTabListener();
 
-
-
     }
+
+
 
     /*private Map<String,Drawable> emotion=new HashMap<>();
 
@@ -185,12 +243,13 @@ public class MainActivity extends BaseActivity
             public void run() {
                 try{
                     String token=accessToken.getToken().toString();
-                    String uidjson= GetJson.getjson(get_uid_url+"?access_token="+token);
+                    byte[] bytes= GetJson.getjson(get_uid_url+"?access_token="+token);
+                    String uidjson=new String(bytes);
                     //Log.d("MainActivity",json);
                     JSONObject jsonObject=new JSONObject(uidjson);
                     String UID=jsonObject.getString("uid");
                     //Log.d("MainActivity",UID);
-                    SharedPreferences.Editor editor=getSharedPreferences("data",MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor=getSharedPreferences("uiddata",MODE_PRIVATE).edit();
                     editor.putString("uid",UID);
                     editor.commit();
 

@@ -14,7 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.a10483.weilog.Adapter.WeilogAdapter;
+import com.example.a10483.weilog.Data.dataBean;
 import com.example.a10483.weilog.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -90,6 +94,14 @@ public class ViewHolder extends RecyclerView.ViewHolder{
         tv.setAutoLinkMask(Linkify.WEB_URLS);
 
         return this;
+    }
+
+    public ViewHolder removedata(WeilogAdapter adapter,ArrayList<dataBean> list, int mPosition){//删除掉一行数据
+        adapter.notifyItemRemoved(mPosition);
+        list.remove(mPosition);
+        adapter.notifyDataSetChanged();
+        return this;
+
     }
 
     public ViewHolder setCount(int viewId,int count){

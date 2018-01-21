@@ -79,18 +79,23 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/allpagedark"/>
+
+
             <ImageView
                 android:id="@+id/explorePage"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:src="@drawable/explorepage"/>
+
+
             <ImageView
                 android:id="@+id/noticePage"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:src="@drawable/noticepage"/>
+
         </LinearLayout>
     </LinearLayout>
 

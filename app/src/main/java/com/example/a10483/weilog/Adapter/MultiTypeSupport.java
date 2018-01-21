@@ -5,5 +5,6 @@ package com.example.a10483.weilog.Adapter;
  */
 
 public interface MultiTypeSupport<T> {
-    public int getLayoutId(T item,int position);
+    int getLayoutId(int itemType);
+    int getItemViewType(int position,T t);
 }

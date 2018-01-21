@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.a10483.weilog.Adapter.WeilogAdapter;
@@ -29,6 +31,7 @@ import com.example.a10483.weilog.Data.picUrls;
 import com.example.a10483.weilog.Data.statusBean;
 import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.R;
+import com.example.a10483.weilog.recyclerviewdecoration;
 import com.example.a10483.weilog.utils.AsyncImageLoader;
 import com.example.a10483.weilog.utils.DownAsynctask;
 import com.example.a10483.weilog.utils.EndScorllListener;
@@ -65,6 +68,9 @@ public class allpage extends Fragment{
     private String sinceid;
     private String max_id;
 
+    private String token;
+
+
     private final static String get_timeline_url="https://api.weibo.com/2/statuses/home_timeline.json";
     public allpage() {
 
@@ -91,9 +97,9 @@ public class allpage extends Fragment{
         //WeilogAdapter adapter=new WeilogAdapter(getActivity(),weilogdata);
         //allpage_listview.setAdapter(adapter);
         accessToken=AccessTokenKeeper.readAccessToken(getContext());
-        final String token= accessToken.getToken().toString();
+        token= accessToken.getToken().toString();
         allpagedata=new ArrayList<>();//记得初始化，否则数据无法绑定
-        es= Executors.newFixedThreadPool(1);
+        es= Executors.newFixedThreadPool(10);//定长线程池大小
         allpage_recyclerview.setAdapter(mAdapter=new WeilogAdapter(getActivity(),allpagedata,R.layout.weilogitem) {
                     @Override
                     public void convert(ViewHolder helper,Object item) {
@@ -113,19 +119,20 @@ public class allpage extends Fragment{
 
                     );
 
-        /*swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        allpage_recyclerview.addItemDecoration(new recyclerviewdecoration(getContext(), OrientationHelper.HORIZONTAL));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"&since_id="+sinceid);
                 //mAdapter.notifyDataSetChanged();
-
+                refreshnewdata(token);
                 swipeRefreshLayout.setRefreshing(false);
             }
-        });*/
+        });
 
         allpage_recyclerview.addOnScrollListener(new EndScorllListener(linearLayoutManager) {
             @Override
             public void onLoadMoredata(int currentPage) {
+
                 new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"&max_id="+max_id);
 
             }
@@ -133,8 +140,15 @@ public class allpage extends Fragment{
         new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token);
         //allpage_listview.setDividerHeight(3);
         //Log.d("allpage","token的值是"+token);
+
         setListener();
+
         return view;
+    }
+
+    public void refreshnewdata(String token){
+        new DownAsynctask(allpagedata,mAdapter,getContext()).executeOnExecutor(es,get_timeline_url+"?access_token="+token+"&since_id="+sinceid);
+
     }
     public void setdata(ViewHolder helper,dataBean db){
         user us=db.getUsers();
@@ -214,6 +228,13 @@ public class allpage extends Fragment{
         //Log.d("allpage",db.getSource());
 
 
+        /*if (allpage_recyclerview.getScrollState() == RecyclerView.SCROLL_STATE_IDLE || (allpage_recyclerview.isComputingLayout() == false)) {
+            if(db.getId().equals(max_id)){
+                helper.removedata(mAdapter,allpagedata,allpagedata.size()-1);
+
+            }
+            mAdapter.notifyDataSetChanged();
+        }*/
 
     }
 
@@ -284,6 +305,11 @@ public class allpage extends Fragment{
                 startActivity(intent);
             }
         });
+
+
+
+
+
 
     }
 }

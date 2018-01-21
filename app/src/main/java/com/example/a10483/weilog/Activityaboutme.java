@@ -63,7 +63,7 @@ public class Activityaboutme extends BaseActivity {
     private String uid;
     private ExecutorService es;
     //private TextView text;
-    private static final String user_shou_url="https://api.weibo.com/2/users/show.json";
+
     private static final String user_timeline="https://api.weibo.com/2/statuses/user_timeline.json";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

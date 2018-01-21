@@ -16,7 +16,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.a10483.weilog.Data.user;
 import com.example.a10483.weilog.MyApplication;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -29,22 +32,15 @@ import java.util.Map;
 public class GetRequest {
 
 
-
-
-   /* public static String  transjson(String url){
-        String  json=new GetRequest().getRequest(url);
-        return json;
-
-    }*/
-    JSONObject requestJson=null;
-    public JSONObject  getRequest(String url){
+    public  static void  getRequest(String url){
 
 
         RequestQueue queue= MyApplication.requestQueue;
-        JsonObjectRequest getrequest=new JsonObjectRequest(url,new Response.Listener<JSONObject>() {
+        final JsonObjectRequest getrequest=new JsonObjectRequest(url,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                requestJson=jsonObject;
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -54,6 +50,5 @@ public class GetRequest {
         });
 
         queue.add(getrequest);
-        return requestJson;
     }
 }

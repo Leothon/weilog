@@ -2,6 +2,7 @@ package com.example.a10483.weilog;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a10483.weilog.utils.GetJson;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.AuthInfo;
@@ -23,6 +25,8 @@ import com.sina.weibo.sdk.auth.WbConnectErrorMessage;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.RequestListener;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 
@@ -40,6 +44,8 @@ public class LoginActivity extends BaseActivity {
     private Oauth2AccessToken mAccessToken;
     private SsoHandler mSsoHandler;
     //private SinaUserInfo mUserInfo;
+    private final static String get_uid_url="https://api.weibo.com/2/account/get_uid.json";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +113,7 @@ public class LoginActivity extends BaseActivity {
     public Handler handler=new Handler(){
         public void handleMessage(Message msg){
             if (msg.what==1){
+                getJson(mAccessToken,get_uid_url);
                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -124,7 +131,7 @@ public class LoginActivity extends BaseActivity {
                     if (mAccessToken.isSessionValid()){
                         //保存token到sharePreferences
                         AccessTokenKeeper.writeAccessToken(LoginActivity.this,mAccessToken);
-                        Toast.makeText(LoginActivity.this,"授权成功"+mAccessToken.getToken(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                         Message message=Message.obtain();
                         message.what=1;
                         handler.sendMessage(message);
@@ -160,5 +167,29 @@ public class LoginActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         ActivityCollector.finishAll();
+    }
+
+    public  void getJson(final Oauth2AccessToken accessToken,final String get_uid_url){
+        new Thread(){
+            @Override
+            public void run() {
+                try{
+                    String token=accessToken.getToken().toString();
+                    byte[] bytes= GetJson.getjson(get_uid_url+"?access_token="+token);
+                    String uidjson=new String(bytes);
+                    //Log.d("MainActivity",json);
+                    JSONObject jsonObject=new JSONObject(uidjson);
+                    String UID=jsonObject.getString("uid");
+                    //Log.d("MainActivity",UID);
+                    SharedPreferences.Editor editor=getSharedPreferences("uiddata",MODE_PRIVATE).edit();
+                    editor.putString("uid",UID);
+                    editor.commit();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+        //JSONObject jsonObject=new JSONObject(json);
     }
 }

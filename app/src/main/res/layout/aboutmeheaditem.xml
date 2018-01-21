@@ -8,12 +8,12 @@
         android:layout_height="140dp"
         android:orientation="vertical"
         android:background="@drawable/background">
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:layout_marginLeft="10dp"
             android:id="@+id/usericon_inme"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:layout_marginTop="70dp"
             android:src="@drawable/usericon"/>
     </LinearLayout>
