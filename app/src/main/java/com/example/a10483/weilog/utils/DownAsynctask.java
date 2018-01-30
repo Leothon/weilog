@@ -51,7 +51,7 @@ public class DownAsynctask extends AsyncTask<String,Void,byte[]> {
         }else{
             loading=false;
         }
-        Log.d("DownAsynctask",strings[0]);
+        //Log.d("DownAsynctask",strings[0]);
         return GetJson.getjson(strings[0]);
     }
 

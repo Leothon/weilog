@@ -32,7 +32,7 @@ public abstract class WeilogAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
     }
     public WeilogAdapter(Context context,ArrayList<T> weilogdatas,MultiTypeSupport<T> multiTypeSupport) {
         this(context, weilogdatas, -1);
-        this.multiTypeSupport = multiTypeSupport;
+        //this.multiTypeSupport = multiTypeSupport;
     }
     @Override
     public int getItemCount() {
@@ -104,13 +104,13 @@ public abstract class WeilogAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
 
 
-    @Override
+   /* @Override
     public int getItemViewType(int position) {
         //if(m{//多布局支持
         //}ultiTypeSupport!=null)
         return multiTypeSupport.getItemViewType(position,weilogdatas.get(position));
 
-    }
+    }*/
 
    /* @Override
     public T getItem(int position) {
@@ -141,7 +141,7 @@ public abstract class WeilogAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     public ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
 
-        mItemLayoutId=multiTypeSupport.getLayoutId(viewType);
+        //mItemLayoutId=multiTypeSupport.getLayoutId(viewType);
 
         //View itemView = inflater.inflate(mItemLayoutId, parent, false);
         //ViewHolder holder = new ViewHolder(itemView);
